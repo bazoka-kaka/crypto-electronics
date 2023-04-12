@@ -13,3 +13,8 @@ fd881740-e767-40a6-8505-92e767f44c3a	12042023	14:46:53	GET	undefined	/css/styles
 3f057aec-7b34-4dbd-88dd-08de622bfbfa	12042023	14:46:55	GET	undefined	/css/styles.css
 9df1ae4c-7182-40ef-b28a-09e054801223	12042023	14:46:56	GET	undefined	/
 ceeaa384-2720-44b0-9dfb-6cd98ccdc465	12042023	14:46:56	GET	undefined	/css/styles.css
+a6c31cfd-65a2-4ee5-9a27-aa49d1da7db0	12042023	14:58:10	GET	undefined	/
+de0d308e-3ab5-4e14-8739-a7c096decfa5	12042023	14:59:31	GET	undefined	/
+071290b7-4f7e-48a3-b3c0-dfa0f0cd5fe6	12042023	14:59:42	GET	undefined	/
+29e4fda7-194e-440a-be82-1e5754fd9780	12042023	14:59:42	GET	undefined	/css/styles.css
+b4f86854-eec6-4903-a29e-cd34fbc0d7c4	12042023	14:59:42	GET	undefined	/favicon.ico

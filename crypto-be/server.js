@@ -2,10 +2,14 @@ const { logger, errLogger } = require("./middlewares/logEvents");
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const PORT = process.env.PORT || 3500;
 
 // middlewares
 app.use(logger);
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
