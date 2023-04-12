@@ -24,10 +24,10 @@ const Header = () => {
           type="text"
           name="search"
           id="search"
-          className="border-[1px] border-black rounded-sm px-4 py-[2px]"
+          className="border-[1px] border-black rounded-sm px-4 py-[1px]"
           placeholder="Enter product name here"
         />
-        <button className="bg-slate-100 rounded-sm transition duration-200 hover:bg-slate-200 px-4 py-[2px] border-[1px] border-black">
+        <button className="bg-slate-100 rounded-sm transition duration-200 hover:bg-slate-200 px-4 py-[1px] border-[1px] border-black">
           Search
         </button>
       </div>

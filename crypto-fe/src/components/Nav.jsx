@@ -2,7 +2,7 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <nav className="flex w-screen bg-white fixed px-48 py-4 border-b-2 border-black items-center justify-between">
+    <nav className="flex w-screen bg-white z-10 fixed px-48 py-4 border-b-2 border-black items-center justify-between">
       <h1 className="uppercase text-2xl tracking-wider">Crypto Electronics</h1>
       <ul className="flex items-center gap-4">
         <li>
