@@ -9,6 +9,7 @@ const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const verifyJWT = require("./middlewares/verifyJWT");
+const credentials = require("./middlewares/credentials");
 const PORT = process.env.PORT || 3500;
 
 // connect to mongodb
@@ -16,6 +17,8 @@ connectDB();
 
 // middlewares
 app.use(logger);
+
+app.use(credentials);
 
 app.use(cookieParser());
 

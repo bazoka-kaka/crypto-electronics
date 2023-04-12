@@ -94,3 +94,6 @@ c6d2aeba-e243-42d4-a460-9aac85434c46	12042023	16:30:18	GET	undefined	/refresh
 a9039742-4b5f-4c87-91b2-94104ed0ea09	12042023	16:30:26	GET	undefined	/employees
 46526af7-cbda-46d8-9839-f76ddbd2551f	12042023	16:30:33	POST	undefined	/auth
 f718a950-46f3-4ccd-afb9-c221752d7c11	12042023	16:30:38	GET	undefined	/employees
+142e1487-a818-4f5e-b74c-c82b3c523252	12042023	16:33:05	GET	undefined	/
+b419372e-5603-47c5-905b-ce7b82ad463b	12042023	16:33:05	GET	undefined	/css/styles.css
+1da91bb9-86df-4b26-bd61-1658b43c3178	12042023	16:33:05	GET	undefined	/favicon.ico
