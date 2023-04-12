@@ -1,25 +1,26 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
     <nav className="flex w-screen bg-white z-10 fixed px-48 py-4 border-b-2 border-black items-center justify-between">
       <h1 className="uppercase text-2xl tracking-wider">Crypto Electronics</h1>
-      <ul className="flex items-center gap-4">
+      <ul className="flex items-center gap-6">
         <li>
-          <a href="/">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li>
-          <a href="/">Products</a>
+          <Link to="/products">Products</Link>
         </li>
         <li>
-          <a href="/">About</a>
+          <Link to="/about">About</Link>
         </li>
         <span> | </span>
         <li>
-          <a href="/">Register</a>
+          <Link to="/register">Register</Link>
         </li>
         <li>
-          <a href="/">Login</a>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </nav>

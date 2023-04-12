@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="px-48 border-t-2 border-black py-10 flex justify-between items-start">
+    <footer className="px-48 border-t-2 border-black pt-10 pb-24 flex justify-between items-start">
       {/* title */}
       <div>
         <h2 className="uppercase text-xl font-semibold tracking-wider">
@@ -32,13 +33,13 @@ const Footer = () => {
           <h2 className="font-semibold text-xl">Links</h2>
           <ul className="flex flex-col gap-2 mt-4 font-light">
             <li>
-              <a href="/">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="/">Products</a>
+              <Link to="/products">Products</Link>
             </li>
             <li>
-              <a href="/">About</a>
+              <Link to="/about">About</Link>
             </li>
           </ul>
         </div>
