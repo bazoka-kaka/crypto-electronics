@@ -97,3 +97,6 @@ f718a950-46f3-4ccd-afb9-c221752d7c11	12042023	16:30:38	GET	undefined	/employees
 142e1487-a818-4f5e-b74c-c82b3c523252	12042023	16:33:05	GET	undefined	/
 b419372e-5603-47c5-905b-ce7b82ad463b	12042023	16:33:05	GET	undefined	/css/styles.css
 1da91bb9-86df-4b26-bd61-1658b43c3178	12042023	16:33:05	GET	undefined	/favicon.ico
+a05af279-97de-46b4-9a81-9b96c53f74ba	12042023	16:39:59	GET	undefined	/
+26d73aac-08b3-4473-8c08-5430d2a1b6d9	12042023	16:39:59	GET	undefined	/css/styles.css
+a043250a-cefd-4631-92f0-effd39d4d150	12042023	16:39:59	GET	undefined	/favicon.ico

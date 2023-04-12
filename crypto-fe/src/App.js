@@ -1,11 +1,7 @@
+import Home from "./pages/Home";
+
 function App() {
-  return (
-    <div>
-      <h1 className="text-blue-400 text-center font-bold tracking-wide text-4xl">
-        Testing
-      </h1>
-    </div>
-  );
+  return <Home />;
 }
 
 export default App;
