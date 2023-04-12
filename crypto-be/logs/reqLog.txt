@@ -100,3 +100,10 @@ b419372e-5603-47c5-905b-ce7b82ad463b	12042023	16:33:05	GET	undefined	/css/styles
 a05af279-97de-46b4-9a81-9b96c53f74ba	12042023	16:39:59	GET	undefined	/
 26d73aac-08b3-4473-8c08-5430d2a1b6d9	12042023	16:39:59	GET	undefined	/css/styles.css
 a043250a-cefd-4631-92f0-effd39d4d150	12042023	16:39:59	GET	undefined	/favicon.ico
+25dc8f95-2e1e-4957-8243-c971b7dc628e	12042023	20:30:45	POST	http://localhost:3000	/register
+961fb998-0f43-49f3-af1c-258f304de8a1	12042023	20:31:39	OPTIONS	http://localhost:3000	/register
+551b0965-7b02-4fc1-9e42-6d1a7039495e	12042023	20:31:39	POST	http://localhost:3000	/register
+632d9636-c718-4d54-ab33-5a88e7d8c31f	12042023	20:32:19	OPTIONS	http://localhost:3000	/register
+0ec133f5-00f3-4dac-9e91-bfaf340e92f9	12042023	20:32:19	POST	http://localhost:3000	/register
+99361653-0c87-442c-b095-60e685cfd695	12042023	20:33:48	OPTIONS	http://localhost:3000	/register
+01fe3229-9926-4ab1-9779-8d59594df654	12042023	20:33:48	POST	http://localhost:3000	/register

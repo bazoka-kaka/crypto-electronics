@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <>
       <Header />
-      <div className="py-12 flex flex-col gap-12">
+      <div className="pt-12 flex flex-col gap-12 pb-48">
         <section id="mouses">
           <h2 className="font-semibold text-xl">Mouses</h2>
           {/* cards */}
