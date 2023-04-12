@@ -15,6 +15,7 @@ const handleAuth = async (req, res) => {
   if (!match) return res.status(401).json({ message: "Bad credentials." });
 
   try {
+    const roles = Object.values(foundUser.roles).filter(Boolean);
     // create refresh token
     const refreshToken = await jwt.sign(
       { username: foundUser.username },
@@ -23,7 +24,7 @@ const handleAuth = async (req, res) => {
     );
     // create access token
     const accessToken = await jwt.sign(
-      { username: foundUser.username },
+      { UserInfo: { username: foundUser.username, roles } },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }
     );
