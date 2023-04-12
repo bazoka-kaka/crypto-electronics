@@ -1,6 +1,6 @@
 # Crypto Electronics
 
-- Ecommerce Website
+- Ecommerce Website for selling electronic devices
 
 ## Frameworks
 
