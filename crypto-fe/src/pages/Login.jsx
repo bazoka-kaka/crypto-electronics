@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import AuthContext from "../context/AuthContext";
 
 const LOGIN_URL = "/auth";
 
@@ -10,6 +11,7 @@ const Login = () => {
   const userRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
@@ -32,7 +34,11 @@ const Login = () => {
           },
         }
       );
-      console.log(JSON.stringify(response));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      const username = response?.data?.user;
+      console.log(accessToken, roles, user);
+      setAuth({ accessToken, roles, user: username });
       setUser("");
       setPwd("");
       navigate("/", { from: location });

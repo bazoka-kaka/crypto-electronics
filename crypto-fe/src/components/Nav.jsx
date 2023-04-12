@@ -1,7 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Nav = () => {
+  const { auth } = useAuth();
   return (
     <nav className="flex w-screen bg-white z-10 fixed px-48 py-4 border-b-2 border-black items-center justify-between">
       <h1 className="uppercase text-2xl tracking-wider">Crypto Electronics</h1>
@@ -16,12 +18,18 @@ const Nav = () => {
           <Link to="/about">About</Link>
         </li>
         <span> | </span>
-        <li>
-          <Link to="/register">Register</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
+        {!auth?.user ? (
+          <>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+          </>
+        ) : (
+          <p>Welcome, {auth?.user}</p>
+        )}
       </ul>
     </nav>
   );

@@ -38,7 +38,7 @@ const handleAuth = async (req, res) => {
       httpOnly: true,
       maxAge: 15 * 60 * 1000,
     });
-    res.json({ accessToken });
+    res.json({ user: foundUser.username, accessToken, roles });
   } catch (err) {
     console.error(err);
   }
