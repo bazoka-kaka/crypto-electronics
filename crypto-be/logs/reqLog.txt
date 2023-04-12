@@ -21,3 +21,7 @@ b4f86854-eec6-4903-a29e-cd34fbc0d7c4	12042023	14:59:42	GET	undefined	/favicon.ic
 d1745dd5-e57d-46fd-8960-8950b3542c8c	12042023	15:20:54	POST	undefined	/register
 d0bc971b-172f-4ef3-b44c-bf80791cf66a	12042023	15:20:59	POST	undefined	/register
 b05d66c0-d877-4369-b4c6-4922f2d48186	12042023	15:21:09	POST	undefined	/register
+d759a459-2c84-48c2-93b3-a16b6effe36a	12042023	15:35:49	POST	undefined	/auth
+793272e0-e312-4a7c-a512-173cb8cc9f08	12042023	15:36:00	POST	undefined	/auth
+8e4d0494-8f8f-451a-92da-ecc8c78e5628	12042023	15:36:57	POST	undefined	/auth
+9c777d8f-af7b-488a-8b4e-c5494d8504df	12042023	15:48:46	POST	undefined	/auth
