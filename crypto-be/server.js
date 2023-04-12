@@ -8,6 +8,7 @@ const corsOptions = require("./config/corsOptions");
 const connectDB = require("./config/dbConn");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const verifyJWT = require("./middlewares/verifyJWT");
 const PORT = process.env.PORT || 3500;
 
 // connect to mongodb
@@ -32,6 +33,9 @@ app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
+
+app.use(verifyJWT);
+app.use("/employees", require("./routes/api/employees"));
 
 app.all("*", (req, res) => {
   res.status(404);
