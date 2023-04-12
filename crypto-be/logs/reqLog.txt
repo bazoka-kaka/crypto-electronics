@@ -18,3 +18,6 @@ de0d308e-3ab5-4e14-8739-a7c096decfa5	12042023	14:59:31	GET	undefined	/
 071290b7-4f7e-48a3-b3c0-dfa0f0cd5fe6	12042023	14:59:42	GET	undefined	/
 29e4fda7-194e-440a-be82-1e5754fd9780	12042023	14:59:42	GET	undefined	/css/styles.css
 b4f86854-eec6-4903-a29e-cd34fbc0d7c4	12042023	14:59:42	GET	undefined	/favicon.ico
+d1745dd5-e57d-46fd-8960-8950b3542c8c	12042023	15:20:54	POST	undefined	/register
+d0bc971b-172f-4ef3-b44c-bf80791cf66a	12042023	15:20:59	POST	undefined	/register
+b05d66c0-d877-4369-b4c6-4922f2d48186	12042023	15:21:09	POST	undefined	/register
