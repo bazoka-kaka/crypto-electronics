@@ -1,0 +1,29 @@
+{
+  "name": "crypto-be",
+  "version": "1.0.0",
+  "description": "Crypto Electronics Backend API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "keywords": [
+    "ecommerce",
+    "electronics",
+    "api",
+    "nodejs",
+    "expressjs",
+    "mongodb",
+    "mongoose"
+  ],
+  "author": "bazoka-kaka",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  },
+  "dependencies": {
+    "date-fns": "^2.29.3",
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}

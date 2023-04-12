@@ -1,0 +1,15 @@
+44475ac2-003e-4ea7-ac96-b568e142686a	12042023	14:40:32	GET	undefined	/
+b22cd442-eca3-4104-9176-7f93e7449392	12042023	14:40:50	GET	undefined	/
+9ca7223e-805e-4dcb-8d0c-e6289943eb17	12042023	14:40:50	GET	undefined	/favicon.ico
+d5f10d20-b926-44c5-80eb-995745054c71	12042023	14:41:07	GET	undefined	/
+49616ac5-226b-49a1-b027-eca667b7a71d	12042023	14:42:47	GET	undefined	/test
+66bd99f2-5c85-4e7e-a6da-3b34da457d5d	12042023	14:44:02	GET	undefined	/
+a0ebd13f-3f9f-424d-82bb-eea096cdf038	12042023	14:44:05	GET	undefined	/ser
+eae1ae6d-cab0-47e9-a64c-4a9655c41cc2	12042023	14:44:58	GET	undefined	/
+9093018c-75d1-4f9d-a41d-8ae3b234fa2c	12042023	14:45:22	GET	undefined	/
+d369dc81-8804-4ef7-8287-be816e4d5c75	12042023	14:46:53	GET	undefined	/
+fd881740-e767-40a6-8505-92e767f44c3a	12042023	14:46:53	GET	undefined	/css/styles.css
+716bd349-c62b-4094-92af-ffcdf1a52942	12042023	14:46:55	GET	undefined	/test
+3f057aec-7b34-4dbd-88dd-08de622bfbfa	12042023	14:46:55	GET	undefined	/css/styles.css
+9df1ae4c-7182-40ef-b28a-09e054801223	12042023	14:46:56	GET	undefined	/
+ceeaa384-2720-44b0-9dfb-6cd98ccdc465	12042023	14:46:56	GET	undefined	/css/styles.css
