@@ -9,16 +9,20 @@ const Login = () => {
           Login into Your Account
         </h1>
         <form className="mt-4">
-          <div className="mt-4">
-            <label htmlFor="username">Username</label>
+          <div>
+            <label htmlFor="username" className="font-semibold">
+              Username
+            </label>
             <input
               type="text"
               id="username"
               className="w-full border-[2px] border-black rounded-md p-2 mt-2"
             />
           </div>
-          <div className="mt-4">
-            <label htmlFor="password">Password</label>
+          <div className="mt-6">
+            <label htmlFor="password" className="font-semibold">
+              Password
+            </label>
             <input
               type="password"
               id="password"
