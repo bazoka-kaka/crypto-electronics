@@ -12,6 +12,7 @@ import PersistLogin from "./components/PersistLogin";
 import User from "./pages/users/User";
 import Products from "./pages/products/Products";
 import Product from "./pages/products/Product";
+import CreateProduct from "./pages/products/Create";
 
 const ROLES = {
   User: 2001,
@@ -48,6 +49,7 @@ function App() {
           >
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<Product />} />
+            <Route path="/products/create" element={<CreateProduct />} />
           </Route>
 
           {/* only for admins */}
