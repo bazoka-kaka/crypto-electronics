@@ -124,9 +124,18 @@ const Register = () => {
             {errMsg}
           </p>
         )}
-        <h1 className="text-3xl font-semibold text-center">
-          Register New User
-        </h1>
+        <img
+          src="/test.png"
+          alt="Crypto Electronics"
+          className="w-20 h-20 mx-auto"
+        />
+        <p className="mt-2 text-2xl text-center uppercase">
+          Crypto Electronics
+        </p>
+        <p className="text-lg font-bold text-center uppercase">
+          ECommerce Website
+        </p>
+        <h1 className="mt-4 text-3xl font-semibold text-center">Register</h1>
         <form className="mt-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="fullname" className="font-semibold">
