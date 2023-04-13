@@ -57,7 +57,7 @@ const Login = () => {
     <div className="py-12 max-w-[800px] flex items-center mx-auto min-h-[calc(100vh-65.6px)]">
       <div className="w-full p-8">
         {errMsg && (
-          <p className="w-full bg-red-500 font-semibold text-white p-2 rounded-md mb-4">
+          <p className="w-full p-2 mb-4 font-semibold text-white bg-red-500 rounded-md">
             <FontAwesomeIcon
               icon={faInfoCircle}
               className="inline-block w-4 h-4 text-white rounded-full"
@@ -65,7 +65,7 @@ const Login = () => {
             {errMsg}
           </p>
         )}
-        <h1 className="text-3xl text-center font-semibold">
+        <h1 className="text-3xl font-semibold text-center">
           Login into Your Account
         </h1>
         <form className="mt-4" onSubmit={handleSubmit}>
@@ -98,7 +98,7 @@ const Login = () => {
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="text-blue-600 hover:text-red-600 transition duration-200"
+              className="text-blue-600 transition duration-200 hover:text-red-600"
             >
               Create new account
             </Link>
