@@ -70,7 +70,7 @@ const Login = () => {
   }, [persist]);
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen">
+    <section className="flex flex-col items-center justify-center min-h-screen py-20">
       <div className="max-w-[500px] w-full">
         <p
           ref={errRef}
@@ -83,10 +83,17 @@ const Login = () => {
         >
           {errMsg}
         </p>
-        <h1 className="text-3xl font-semibold text-center">
-          Login into Your Account
-        </h1>
-        <form onSubmit={handleSubmit} className="mt-8">
+        <img
+          src="/favicon.png"
+          alt="Crypto Electronics"
+          className="w-20 h-20 mx-auto"
+        />
+        <p className="mt-2 text-2xl text-center uppercase">
+          Crypto Electronics
+        </p>
+        <p className="text-lg font-bold text-center uppercase">Dashboard</p>
+        <h1 className="mt-4 text-3xl font-semibold text-center">Login</h1>
+        <form onSubmit={handleSubmit} className="mt-4">
           <label htmlFor="username" className="block font-semibold">
             Username
           </label>
