@@ -11,6 +11,7 @@ import Users from "./pages/users/Users";
 import PersistLogin from "./components/PersistLogin";
 import User from "./pages/users/User";
 import Products from "./pages/products/Products";
+import Product from "./pages/products/Product";
 
 const ROLES = {
   User: 2001,
@@ -46,6 +47,7 @@ function App() {
             element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Editor]} />}
           >
             <Route path="/products" element={<Products />} />
+            <Route path="/products/:id" element={<Product />} />
           </Route>
 
           {/* only for admins */}
