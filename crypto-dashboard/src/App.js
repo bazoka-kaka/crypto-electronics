@@ -10,6 +10,7 @@ import UpdateUser from "./pages/users/Update";
 import Users from "./pages/users/Users";
 import PersistLogin from "./components/PersistLogin";
 import User from "./pages/users/User";
+import Products from "./pages/products/Products";
 
 const ROLES = {
   User: 2001,
@@ -43,7 +44,9 @@ function App() {
           {/* create, update */}
           <Route
             element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Editor]} />}
-          ></Route>
+          >
+            <Route path="/products" element={<Products />} />
+          </Route>
 
           {/* only for admins */}
           <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>

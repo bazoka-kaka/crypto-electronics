@@ -11,7 +11,13 @@ const DashboardLayout = () => {
     <>
       {/* navbar */}
       <nav className="fixed z-20 w-64 min-h-screen px-4 py-10 text-white bg-black">
-        <h1 className="text-3xl font-semibold text-center">Dashboard</h1>
+        <img src="/favicon.png" className="w-20 mx-auto" alt="" />
+        <h2 className="mt-2 font-semibold text-center uppercase">
+          Crypto Electronics
+        </h2>
+        <h1 className="text-3xl font-bold mt-[2px] text-center uppercase">
+          Dashboard
+        </h1>
         <div className="flex flex-col gap-2 mt-8">
           <Link
             to="/products"
