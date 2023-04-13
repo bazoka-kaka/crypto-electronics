@@ -20,6 +20,7 @@ const buyProduct = async (req, res) => {
   if (product.stock < total)
     return res.status(400).json({ message: "Product stock is not sufficient" });
   product.stock -= total;
+  product.sold += total;
 
   const userProduct = user.cart.products.find(
     (pro) => pro.name == product.name
