@@ -13,6 +13,7 @@ import User from "./pages/users/User";
 import Products from "./pages/products/Products";
 import Product from "./pages/products/Product";
 import CreateProduct from "./pages/products/Create";
+import UpdateProduct from "./pages/products/Update";
 
 const ROLES = {
   User: 2001,
@@ -50,6 +51,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/products/:id" element={<Product />} />
             <Route path="/products/create" element={<CreateProduct />} />
+            <Route path="/products/update/:id" element={<UpdateProduct />} />
           </Route>
 
           {/* only for admins */}

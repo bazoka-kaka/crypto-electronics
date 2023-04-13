@@ -120,7 +120,7 @@ const Products = () => {
                       [5150, 1984].includes(role)
                     ) && (
                       <Link
-                        to={`/users/update/${product._id}`}
+                        to={`/products/update/${product._id}`}
                         className="px-2 font-semibold text-white bg-blue-500 rounded-sm"
                       >
                         Update
