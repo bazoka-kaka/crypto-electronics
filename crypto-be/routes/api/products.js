@@ -14,12 +14,14 @@ router
   .put(
     verifyRoles(roles_list.Admin, roles_list.Editor),
     productsController.updateProduct
-  )
+  );
+
+router
+  .route("/:id")
+  .get(productsController.getProduct)
   .delete(
     verifyRoles(roles_list.Admin, roles_list.Editor),
     productsController.deleteProduct
   );
-
-router.route("/:id").get(productsController.getProduct);
 
 module.exports = router;

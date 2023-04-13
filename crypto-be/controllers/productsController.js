@@ -27,6 +27,7 @@ const updateProduct = async (req, res) => {
   if (req?.body?.imgUrl) product.imgUrl = req.body.imgUrl;
   if (req?.body?.price) product.price = req.body.price;
   if (req?.body?.stock) product.stock = req.body.stock;
+  if (req?.body?.description) product.description = req.body.description;
   if (req?.body?.tags) product.tags = req.body.tags;
   const result = await product.save();
   console.log(result);
@@ -34,12 +35,12 @@ const updateProduct = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  if (!req?.body?.id)
+  if (!req?.params?.id)
     return res.status(400).json({ message: "ID parameter is required." });
-  const product = await Product.findOne({ _id: req.body.id }).exec();
+  const product = await Product.findOne({ _id: req.params.id }).exec();
   if (!product)
     return res.status(204).json({ message: "Product is not found." });
-  await product.deleteOne({ _id: req.body.id });
+  await product.deleteOne({ _id: req.params.id });
   res.sendStatus(204);
 };
 
