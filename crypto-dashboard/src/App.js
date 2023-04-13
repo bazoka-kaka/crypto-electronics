@@ -1,8 +1,16 @@
+import { Routes, Route } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Layout from "./components/Layout";
+
 function App() {
   return (
-    <div className="App">
-      <h1 className="font-semibold text-center">Hello World!</h1>
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+      </Route>
+    </Routes>
   );
 }
 
