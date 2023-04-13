@@ -14,16 +14,16 @@ const handleAuth = async (req, res) => {
   const match = await bcrypt.compare(pwd, foundUser.password);
   if (!match) return res.status(401).json({ message: "Bad credentials." });
 
-  try {
+  if (match) {
     const roles = Object.values(foundUser.roles).filter(Boolean);
     // create refresh token
-    const refreshToken = await jwt.sign(
+    const refreshToken = jwt.sign(
       { username: foundUser.username },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "15m" }
     );
     // create access token
-    const accessToken = await jwt.sign(
+    const accessToken = jwt.sign(
       { UserInfo: { username: foundUser.username, roles } },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }
@@ -39,8 +39,8 @@ const handleAuth = async (req, res) => {
       maxAge: 15 * 60 * 1000,
     });
     res.json({ user: foundUser.username, accessToken, roles });
-  } catch (err) {
-    console.error(err);
+  } else {
+    res.status(401).json({ message: "Bad credentials." });
   }
 };
 
