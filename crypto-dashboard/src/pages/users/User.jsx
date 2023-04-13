@@ -66,6 +66,65 @@ const User = () => {
                     )
                 )}
             </ul>
+            <p>Cart:</p>
+            <ul className="ml-6">
+              <li>
+                <p>
+                  Paid:{" "}
+                  {user?.cart?.paid ? (
+                    <span className="font-semibold text-green-500">True</span>
+                  ) : (
+                    <span className="font-semibold text-red-500">False</span>
+                  )}
+                </p>
+              </li>
+              <li>
+                <p>
+                  Products:
+                  {user?.cart?.products.map((product, i) => (
+                    <ul className="ml-6">
+                      <li>
+                        <p>
+                          ID:{" "}
+                          <span className="font-semibold">{product._id}</span>
+                        </p>
+                        <p>
+                          Name:{" "}
+                          <span className="font-semibold">{product.name}</span>
+                        </p>
+                        <p>
+                          Price:{" "}
+                          <span className="font-semibold">
+                            ${product.price}
+                          </span>
+                        </p>
+                        <p>
+                          Stock:{" "}
+                          <span className="font-semibold">{product.stock}</span>
+                        </p>
+                        <p>
+                          Tags:{" "}
+                          <span className="font-semibold">{product.tags}</span>
+                        </p>
+                        <img
+                          src={product.imgUrl}
+                          alt=""
+                          className="object-cover object-center w-48 h-48 mt-2"
+                        />
+                      </li>
+                    </ul>
+                  ))}
+                </p>
+              </li>
+              <li>
+                <p>
+                  Total price:{" "}
+                  <span className="font-semibold">
+                    ${user?.cart?.totalPrice}
+                  </span>
+                </p>
+              </li>
+            </ul>
           </>
         )}
       </div>
