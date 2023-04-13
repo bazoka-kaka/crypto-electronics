@@ -40,6 +40,7 @@ app.use("/logout", require("./routes/logout"));
 app.use(verifyJWT);
 app.use("/carts", require("./routes/api/carts"));
 app.use("/products", require("./routes/api/products"));
+app.use("/users", require("./routes/api/users"));
 
 app.all("*", (req, res) => {
   res.status(404);

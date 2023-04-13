@@ -331,3 +331,7 @@ ee0027d6-8ad0-4f3f-898f-66555666489f	13042023	15:04:59	GET	undefined	/refresh
 1d78b3b6-1ffd-4b03-b3ed-0d0cb14e608d	13042023	15:11:45	GET	undefined	/refresh
 7f233187-d25c-43c4-b34f-f423721b6fef	13042023	15:11:52	POST	undefined	/carts/pay
 0c3fc4f1-c7e8-4b2e-a33f-b8de00b3e11f	13042023	15:11:58	POST	undefined	/carts/buy
+3c07bd2c-e2b7-4500-aaba-dc018382e12e	13042023	15:54:55	POST	undefined	/auth
+6cdd14c0-e779-46e6-be57-49006398e31d	13042023	15:55:03	GET	undefined	/users
+ce91ac78-c33f-48d2-9366-51d9cd64ce31	13042023	15:55:10	POST	undefined	/auth
+97d1f7d0-9bed-4150-8b2f-aaf549dfd41c	13042023	15:55:17	GET	undefined	/users
