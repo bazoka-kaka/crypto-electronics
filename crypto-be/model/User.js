@@ -26,6 +26,17 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  cart: {
+    products: Array,
+    totalPrice: {
+      type: Number,
+      default: 0,
+    },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
+  },
   refreshToken: String,
 });
 
