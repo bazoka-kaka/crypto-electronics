@@ -1,4 +1,8 @@
+import useLogout from "../../hooks/useLogout";
+
 const Account = () => {
+  const logout = useLogout();
+
   return (
     <div>
       <h1 className="text-xl font-semibold">Account</h1>
@@ -71,6 +75,7 @@ const Account = () => {
           <div className="flex justify-between mt-12">
             <button
               type="button"
+              onClick={logout}
               className="p-2 font-semibold text-red-400 transition duration-200 border-2 border-red-400 rounded-md hover:bg-red-400 hover:text-gray-50"
             >
               Logout

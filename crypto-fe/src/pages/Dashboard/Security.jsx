@@ -1,6 +1,8 @@
 import React from "react";
+import useLogout from "../../hooks/useLogout";
 
 const Security = () => {
+  const logout = useLogout();
   return (
     <div>
       <h1 className="text-xl font-semibold">Security</h1>
@@ -41,6 +43,7 @@ const Security = () => {
           <div className="flex justify-between mt-12">
             <button
               type="button"
+              onClick={logout}
               className="p-2 font-semibold text-red-400 transition duration-200 border-2 border-red-400 rounded-md hover:bg-red-400 hover:text-gray-50"
             >
               Logout

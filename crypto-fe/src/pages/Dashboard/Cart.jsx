@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
+import useLogout from "../../hooks/useLogout";
 
 const Cart = () => {
+  const logout = useLogout();
   const [products] = useState([
     {
       id: 1,
@@ -55,6 +57,7 @@ const Cart = () => {
         <div className="flex justify-between mt-8">
           <button
             type="button"
+            onClick={logout}
             className="p-2 font-semibold text-red-400 transition duration-200 border-2 border-red-400 rounded-md hover:bg-red-400 hover:text-gray-50"
           >
             Logout
