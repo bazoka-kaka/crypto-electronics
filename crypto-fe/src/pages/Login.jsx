@@ -32,6 +32,8 @@ const Login = () => {
           headers: {
             "Content-Type": "application/json",
           },
+
+          withCredentials: true,
         }
       );
       const accessToken = response?.data?.accessToken;

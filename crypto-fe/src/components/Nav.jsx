@@ -1,12 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import useRefreshToken from "../hooks/useRefreshToken";
 
 const Nav = () => {
   const { auth } = useAuth();
+  const refresh = useRefreshToken();
+
   return (
-    <nav className="flex w-screen bg-white z-10 fixed px-48 py-4 border-b-2 border-black items-center justify-between">
-      <h1 className="uppercase text-2xl tracking-wider">Crypto Electronics</h1>
+    <nav className="fixed z-10 flex items-center justify-between w-screen px-48 py-4 bg-white border-b-2 border-black">
+      <h1 className="text-2xl tracking-wider uppercase">Crypto Electronics</h1>
       <ul className="flex items-center gap-6">
         <li>
           <Link to="/">Home</Link>
@@ -28,7 +31,10 @@ const Nav = () => {
             </li>
           </>
         ) : (
-          <p>Welcome, {auth?.user}</p>
+          <>
+            <p>Welcome, {auth?.user}</p>
+            <button onClick={refresh}>Refresh</button>
+          </>
         )}
       </ul>
     </nav>

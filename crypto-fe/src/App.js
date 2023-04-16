@@ -29,7 +29,6 @@ function App() {
         const response = await axios.get("/products", {
           signal: controller.signal,
         });
-        console.log(response?.data);
         isMounted && setProducts(response?.data);
       } catch (err) {
         console.error(err?.message);

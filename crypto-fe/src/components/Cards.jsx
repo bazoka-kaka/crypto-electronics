@@ -8,10 +8,10 @@ const Cards = ({ tagName, products }) => {
         products.map((product) =>
           tagName ? (
             product?.tags?.includes(tagName.toLowerCase()) && (
-              <Card product={product} key={product.id} />
+              <Card product={product} key={product._id} />
             )
           ) : (
-            <Card product={product} key={product.id} />
+            <Card product={product} key={product._id} />
           )
         )
       ) : (
