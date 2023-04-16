@@ -15,10 +15,12 @@ const Account = () => {
               className="object-cover rounded-md w-28 h-28"
             />
             <div className="flex items-center gap-8">
-              <button className="px-4 py-2 font-semibold text-blue-600 border-2 border-blue-600 rounded-md">
+              <button className="px-4 py-2 font-semibold text-blue-600 transition duration-200 border-2 border-blue-600 rounded-md hover:text-gray-50 hover:bg-blue-600">
                 Change
               </button>
-              <button className="font-semibold text-gray-500">Delete</button>
+              <button className="font-semibold text-gray-500 transition duration-200 hover:text-red-400">
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -69,7 +71,7 @@ const Account = () => {
           <div className="flex justify-between mt-12">
             <button
               type="button"
-              className="p-2 font-semibold text-red-400 border-2 border-red-400 rounded-md"
+              className="p-2 font-semibold text-red-400 transition duration-200 border-2 border-red-400 rounded-md hover:bg-red-400 hover:text-gray-50"
             >
               Logout
             </button>
