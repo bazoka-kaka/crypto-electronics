@@ -11,22 +11,20 @@ const Product = ({ products }) => {
 
   const handleGoBack = (e) => {
     e.preventDefault();
-    navigate(-1, { from: location });
+    navigate(-1, { from: location, replace: true, preventScrollReset: false });
   };
 
   useEffect(() => {
-    products.map((pro) => {
-      if (pro.id === parseInt(id)) {
-        setProduct(pro);
-      }
-    });
-  }, [id]);
+    setProduct(products.find((pro) => pro._id === id));
+  }, [id, products]);
 
-  return (
+  return !product ? (
+    <p>Loading...</p>
+  ) : (
     <div className="flex items-center justify-center min-h-[calc(100vh-65.6px)]">
       <div className="flex">
         <div className="w-2/5 pr-5">
-          <img src={product.img} alt={product.name} />
+          <img src={product.imgUrl} alt={product.name} />
         </div>
         <div className="w-3/5 pl-5">
           <h1 className="text-2xl uppercase">{product.name}</h1>

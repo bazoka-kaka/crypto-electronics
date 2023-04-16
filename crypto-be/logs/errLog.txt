@@ -4,3 +4,4 @@ b37178b9-a5fb-4b24-9fc9-c5e6a1855970	12042023	14:44:58	Error: ENOENT: no such fi
 2bd96492-4b6f-4f21-8a9b-fb9b963c293a	12042023	14:59:31	Error: Not allowed by CORS
 ad439ca3-be80-44e2-8e72-8645a2c36b60	12042023	15:53:04	TypeError: Cannot read properties of undefined (reading 'includes')
 465d0f01-8b09-4ae0-955f-901b15400d89	12042023	16:21:03	ReferenceError: employees is not defined
+c4a7785f-97c5-4da4-aca0-3d562a6ded9b	14042023	02:28:12	Error: Not allowed by CORS

@@ -12,7 +12,7 @@ const Header = () => {
   ]);
 
   return (
-    <header className="text-center pt-12">
+    <header className="pt-12 text-center">
       <h1 className="text-5xl">Welcome to Crypto Electronics</h1>
       <p className="mt-4 text-xl">
         We sell all kinds of electronics devices for your absolute best
@@ -33,12 +33,14 @@ const Header = () => {
       </div>
       {/* tags */}
       <div className="mt-6">
-        <p className="text-sm">Click a category that you want</p>
-        <div className="flex flex-wrap gap-2 mt-2 text-sm justify-center">
+        <p className="text-sm">
+          Select (by clicking) the categories of your choice
+        </p>
+        <div className="flex flex-wrap justify-center gap-2 mt-2 text-sm">
           {tags.map((tag, i) => (
             <button
               key={i}
-              className="px-2 hover:bg-slate-300 transition duration-200 bg-slate-200 rounded-md"
+              className="px-2 transition duration-200 rounded-md hover:bg-slate-300 bg-slate-200"
             >
               {tag}
             </button>
