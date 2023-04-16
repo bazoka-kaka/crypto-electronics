@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
+import { faBell } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Nav = () => {
   const { auth } = useAuth();
@@ -35,6 +37,10 @@ const Nav = () => {
         ) : (
           <>
             <p>Welcome, {auth?.user}</p>
+
+            <Link to="/notifications">
+              <FontAwesomeIcon icon={faBell} className="text-gray-500" />
+            </Link>
             <Link to="/dashboard">
               <img
                 src="/portrait.jpg"

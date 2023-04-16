@@ -16,6 +16,7 @@ import Account from "./pages/Dashboard/Account";
 import Cart from "./pages/Dashboard/Cart";
 import Security from "./pages/Dashboard/Security";
 import RequireAuth from "./components/RequireAuth";
+import Notifications from "./pages/Notifications";
 
 const ROLES_LIST = {
   User: 2001,
@@ -83,6 +84,9 @@ function App() {
               />
             }
           >
+            <Route element={<UnprotectedLayout />}>
+              <Route path="/notifications" element={<Notifications />} />
+            </Route>
             <Route element={<ProtectedLayout />}>
               <Route path="/dashboard" element={<Account />} />
               <Route path="/dashboard/cart" element={<Cart />} />
