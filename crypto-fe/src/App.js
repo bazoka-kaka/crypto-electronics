@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "./api/axios";
+import PersistLogin from "./components/PersistLogin";
 import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
@@ -46,19 +47,24 @@ function App() {
   return (
     <Routes>
       <Route element={<ScrollToTop />}>
-        {/* unprotected */}
-        <Route path="/" element={<UnprotectedLayout />}>
-          <Route path="/" element={<Home products={products} />} />
-          <Route path="/products" element={<Products products={products} />} />
-          <Route
-            path="/products/:id"
-            element={<Product products={products} />}
-          />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/401" element={<Unauthorized />} />
-          <Route path="/404" element={<NotFound />} />
-          <Route path="/*" element={<Navigate to="/404" />} />
+        <Route element={<PersistLogin />}>
+          {/* unprotected */}
+          <Route path="/" element={<UnprotectedLayout />}>
+            <Route path="/" element={<Home products={products} />} />
+            <Route
+              path="/products"
+              element={<Products products={products} />}
+            />
+            <Route
+              path="/products/:id"
+              element={<Product products={products} />}
+            />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/401" element={<Unauthorized />} />
+            <Route path="/404" element={<NotFound />} />
+            <Route path="/*" element={<Navigate to="/404" />} />
+          </Route>
         </Route>
       </Route>
     </Routes>

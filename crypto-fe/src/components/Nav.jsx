@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import useRefreshToken from "../hooks/useRefreshToken";
+import useLogout from "../hooks/useLogout";
 
 const Nav = () => {
   const { auth } = useAuth();
-  const refresh = useRefreshToken();
+  const logout = useLogout();
+
+  useEffect(() => {
+    console.log(auth);
+  }, [auth]);
 
   return (
     <nav className="fixed z-10 flex items-center justify-between w-screen px-48 py-4 bg-white border-b-2 border-black">
@@ -33,7 +37,7 @@ const Nav = () => {
         ) : (
           <>
             <p>Welcome, {auth?.user}</p>
-            <button onClick={refresh}>Refresh</button>
+            <button onClick={logout}>Logout</button>
           </>
         )}
       </ul>
