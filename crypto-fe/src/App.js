@@ -15,12 +15,13 @@ import Product from "./pages/Products/Product";
 import Account from "./pages/Dashboard/Account";
 import Cart from "./pages/Dashboard/Cart";
 import Security from "./pages/Dashboard/Security";
+import RequireAuth from "./components/RequireAuth";
 
-// const ROLES = {
-//   User: 2001,
-//   Editor: 1984,
-//   Admin: 5150,
-// };
+const ROLES_LIST = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+};
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -71,10 +72,22 @@ function App() {
           </Route>
 
           {/* protected */}
-          <Route element={<ProtectedLayout />}>
-            <Route path="/dashboard" element={<Account />} />
-            <Route path="/dashboard/cart" element={<Cart />} />
-            <Route path="/dashboard/security" element={<Security />} />
+          <Route
+            element={
+              <RequireAuth
+                allowedRoles={[
+                  ROLES_LIST.Admin,
+                  ROLES_LIST.Editor,
+                  ROLES_LIST.User,
+                ]}
+              />
+            }
+          >
+            <Route element={<ProtectedLayout />}>
+              <Route path="/dashboard" element={<Account />} />
+              <Route path="/dashboard/cart" element={<Cart />} />
+              <Route path="/dashboard/security" element={<Security />} />
+            </Route>
           </Route>
         </Route>
       </Route>
