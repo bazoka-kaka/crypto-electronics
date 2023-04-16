@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "../api/axios";
 import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import AuthContext from "../context/AuthContext";
+import useAuth from "../hooks/useAuth";
 
 const LOGIN_URL = "/auth";
 
@@ -11,7 +11,7 @@ const Login = () => {
   const userRef = useRef();
   const location = useLocation();
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth, persist, setPersist } = useAuth();
 
   const [user, setUser] = useState("");
   const [pwd, setPwd] = useState("");
@@ -54,6 +54,14 @@ const Login = () => {
       }
     }
   };
+
+  const togglePersist = () => {
+    setPersist((prev) => !prev);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("persist", JSON.stringify(persist));
+  }, [persist]);
 
   return (
     <div className="py-12 max-w-[800px] flex items-center mx-auto min-h-[calc(100vh-65.6px)]">
@@ -105,7 +113,19 @@ const Login = () => {
               className="w-full border-[2px] border-black rounded-md p-2 mt-2"
             />
           </div>
-          <p className="mt-8">
+          <div className="mt-4">
+            <input
+              type="checkbox"
+              id="persist"
+              checked={persist}
+              onChange={togglePersist}
+            />{" "}
+            <label htmlFor="persist">Trust this device</label>
+          </div>
+          <button className="mt-4 bg-slate-800 hover:bg-white border-[1px] border-slate-800 hover:text-black rounded-md transition duration-400 text-white font-bold px-8 py-2">
+            Login
+          </button>
+          <p className="mt-4">
             Don't have an account?{" "}
             <Link
               to="/register"
@@ -114,9 +134,6 @@ const Login = () => {
               Create new account
             </Link>
           </p>
-          <button className="mt-4 bg-slate-800 hover:bg-white border-[1px] border-slate-800 hover:text-black rounded-md transition duration-400 text-white font-bold px-8 py-2">
-            Login
-          </button>
         </form>
       </div>
     </div>

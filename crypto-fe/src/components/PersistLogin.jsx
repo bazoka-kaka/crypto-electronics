@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const PersistLogin = () => {
-  const { auth } = useAuth();
+  const { auth, persist } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const refresh = useRefreshToken();
 
@@ -21,19 +21,19 @@ const PersistLogin = () => {
       }
     };
 
-    !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
+    !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => {
       isMounted = false;
     };
-  }, [refresh, auth]);
+  }, [refresh, auth, persist]);
 
   useEffect(() => {
     console.log(`isLoading: ${isLoading}`);
     console.log(`aT: ${auth?.accessToken}`);
   }, [isLoading, auth]);
 
-  return isLoading ? <p>Loading...</p> : <Outlet />;
+  return !persist ? <Outlet /> : isLoading ? <p>Loading...</p> : <Outlet />;
 };
 
 export default PersistLogin;
