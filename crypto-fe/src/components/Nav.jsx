@@ -1,11 +1,9 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import useLogout from "../hooks/useLogout";
 
 const Nav = () => {
   const { auth } = useAuth();
-  const logout = useLogout();
 
   useEffect(() => {
     console.log(auth);
@@ -37,7 +35,13 @@ const Nav = () => {
         ) : (
           <>
             <p>Welcome, {auth?.user}</p>
-            <button onClick={logout}>Logout</button>
+            <Link to="/dashboard">
+              <img
+                src="/portrait.jpg"
+                alt=""
+                className="object-cover w-8 h-8 border-2 rounded-md border-slate-200"
+              />
+            </Link>
           </>
         )}
       </ul>

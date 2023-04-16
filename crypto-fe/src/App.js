@@ -5,12 +5,16 @@ import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
 import Login from "./pages/Login";
 import UnprotectedLayout from "./components/UnprotectedLayout";
+import ProtectedLayout from "./components/ProtectedLayout";
 import Home from "./pages/Home";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Unauthorized from "./pages/Unauthorized";
 import NotFound from "./pages/NotFound";
 import Products from "./pages/Products/Products";
 import Product from "./pages/Products/Product";
+import Account from "./pages/Dashboard/Account";
+import Cart from "./pages/Dashboard/Cart";
+import Security from "./pages/Dashboard/Security";
 
 // const ROLES = {
 //   User: 2001,
@@ -64,6 +68,13 @@ function App() {
             <Route path="/401" element={<Unauthorized />} />
             <Route path="/404" element={<NotFound />} />
             <Route path="/*" element={<Navigate to="/404" />} />
+          </Route>
+
+          {/* protected */}
+          <Route element={<ProtectedLayout />}>
+            <Route path="/dashboard" element={<Account />} />
+            <Route path="/dashboard/cart" element={<Cart />} />
+            <Route path="/dashboard/security" element={<Security />} />
           </Route>
         </Route>
       </Route>
