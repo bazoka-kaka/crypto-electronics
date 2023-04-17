@@ -1,8 +1,15 @@
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = ({ tags, setSelectedTags }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchValue, setSearchValue] = useState("");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    navigate(`/products?search=${searchValue}`, { from: location });
+  };
 
   const handleNavigate = (tag) => {
     setSelectedTags((prev) => [...prev, tag]);
@@ -22,10 +29,15 @@ const Header = ({ tags, setSelectedTags }) => {
           type="text"
           name="search"
           id="search"
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
           className="border-[1px] border-black rounded-md px-4 py-[1px]"
           placeholder="Enter product name here"
         />
-        <button className="rounded-md transition duration-200 hover:bg-white hover:text-black border-black border-[1px] px-4 py-[1px] bg-black text-white font-semibold">
+        <button
+          onClick={handleSearch}
+          className="rounded-md transition duration-200 hover:bg-white hover:text-black border-black border-[1px] px-4 py-[1px] bg-black text-white font-semibold"
+        >
           Search
         </button>
       </div>

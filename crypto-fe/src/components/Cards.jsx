@@ -1,6 +1,6 @@
 import Card from "./Card";
 
-const Cards = ({ tagName, products }) => {
+const Cards = ({ tagName, products, filterName }) => {
   return (
     <div className="flex flex-wrap justify-center gap-6 mt-8">
       {/* card */}
@@ -8,6 +8,12 @@ const Cards = ({ tagName, products }) => {
         products.map((product) =>
           tagName ? (
             product?.tags?.includes(tagName.toLowerCase()) && (
+              <Card product={product} key={product._id} />
+            )
+          ) : filterName?.length ? (
+            product?.name
+              ?.toLowerCase()
+              ?.includes(filterName?.toLowerCase()) && (
               <Card product={product} key={product._id} />
             )
           ) : (
