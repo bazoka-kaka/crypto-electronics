@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
+import {
+  faMinusCircle,
+  faPlusCircle,
+  faAngleLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Product = ({ products }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
+  const [count, setCount] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
   const axiosPrivate = useAxiosPrivate();
@@ -26,9 +31,10 @@ const Product = ({ products }) => {
     try {
       const response = await axiosPrivate.post(
         "/carts/buy",
-        JSON.stringify({ userId: auth?.id, productId: id, total: 1 })
+        JSON.stringify({ userId: auth?.id, productId: id, total: count })
       );
       console.log(JSON.stringify(response?.data));
+      navigate("/", { from: location });
     } catch (err) {
       console.error(err?.message);
     }
@@ -49,8 +55,26 @@ const Product = ({ products }) => {
           </p>
           <h2 className="mt-6 text-2xl font-bold">${product.price}</h2>
           <p className="mt-6">{product.description}</p>
+          {/* change total products */}
+          <div className="flex items-center gap-2 mt-6 select-none">
+            <button
+              onClick={() => {
+                if (count - 1 >= 0) setCount((prev) => prev - 1);
+              }}
+            >
+              <FontAwesomeIcon className="text-2xl" icon={faMinusCircle} />
+            </button>
+            <span className="text-2xl font-semibold mb-[3px]">{count}</span>
+            <button
+              onClick={() => {
+                if (count + 1 <= product.stock) setCount((prev) => prev + 1);
+              }}
+            >
+              <FontAwesomeIcon className="text-2xl" icon={faPlusCircle} />
+            </button>
+          </div>
           {/* cta */}
-          <div className="flex gap-4 mt-12">
+          <div className="flex gap-4 mt-8">
             <button className="px-12 py-3 font-bold transition duration-200 border-2 border-black rounded-md hover:bg-gray-100">
               Chat
             </button>
