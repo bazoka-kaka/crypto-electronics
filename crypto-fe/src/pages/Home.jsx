@@ -1,10 +1,15 @@
+import { useEffect } from "react";
 import Cards from "../components/Cards";
 import Header from "../components/Header";
 
-const Home = ({ products }) => {
+const Home = ({ products, tags, setSelectedTags }) => {
+  useEffect(() => {
+    setSelectedTags([]);
+  }, [setSelectedTags]);
+
   return (
     <>
-      <Header />
+      <Header tags={tags} setSelectedTags={setSelectedTags} />
       <div className="flex flex-col gap-12 pt-12 pb-48">
         <section id="mouses">
           <h2 className="text-xl font-semibold">Mouses</h2>

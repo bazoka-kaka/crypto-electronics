@@ -26,6 +26,27 @@ const ROLES_LIST = {
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  useEffect(() => {
+    if (selectedTags?.length) {
+      setFilteredProducts([]);
+      products?.forEach((product) => {
+        let found = true;
+        const tags = product?.tags?.split(",");
+        selectedTags?.forEach((tag) => {
+          if (!tags?.includes(tag)) {
+            found = false;
+          }
+        });
+        if (found) setFilteredProducts((prev) => [...prev, product]);
+      });
+    } else {
+      setFilteredProducts(products);
+    }
+  }, [selectedTags, products]);
 
   useEffect(() => {
     let isMounted = true;
@@ -35,6 +56,15 @@ function App() {
       try {
         const response = await axios.get("/products", {
           signal: controller.signal,
+        });
+        response?.data?.forEach((product) => {
+          const tmpTags = product.tags.split(",");
+          tmpTags.forEach((tag) => {
+            const found = tags?.includes(tag);
+            if (!found) {
+              setTags([...tags, tag]);
+            }
+          });
         });
         isMounted && setProducts(response?.data);
       } catch (err) {
@@ -48,7 +78,7 @@ function App() {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [tags]);
 
   return (
     <Routes>
@@ -56,10 +86,26 @@ function App() {
         <Route element={<PersistLogin />}>
           {/* unprotected */}
           <Route path="/" element={<UnprotectedLayout />}>
-            <Route path="/" element={<Home products={products} />} />
+            <Route
+              path="/"
+              element={
+                <Home
+                  products={products}
+                  tags={tags}
+                  setSelectedTags={setSelectedTags}
+                />
+              }
+            />
             <Route
               path="/products"
-              element={<Products products={products} />}
+              element={
+                <Products
+                  products={filteredProducts}
+                  tags={tags}
+                  selectedTags={selectedTags}
+                  setSelectedTags={setSelectedTags}
+                />
+              }
             />
             <Route
               path="/products/:id"

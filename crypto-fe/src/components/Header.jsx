@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
-const Header = () => {
-  const [tags, setTags] = useState([
-    "Gaming",
-    "Programming",
-    "Office",
-    "Mouse",
-    "Keyboard",
-    "Computer",
-    "Laptop",
-  ]);
+const Header = ({ tags, setSelectedTags }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleNavigate = (tag) => {
+    setSelectedTags((prev) => [...prev, tag]);
+    navigate("/products", { from: location });
+  };
 
   return (
     <header className="pt-12 text-center">
@@ -40,6 +38,7 @@ const Header = () => {
           {tags.map((tag, i) => (
             <button
               key={i}
+              onClick={() => handleNavigate(tag)}
               className="px-2 transition duration-200 rounded-md hover:bg-slate-300 bg-slate-200"
             >
               {tag}
