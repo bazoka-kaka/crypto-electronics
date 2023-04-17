@@ -1,12 +1,94 @@
+import { useEffect, useState } from "react";
 import useLogout from "../../hooks/useLogout";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
+import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const NAME_REGEX = /^[A-z\s]{4,50}$/;
+const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const Account = () => {
   const logout = useLogout();
+  const { auth, setAuth } = useAuth();
+  const [user, setUser] = useState({});
+  const [disabledInput, setDisabled] = useState(true);
+  const [errMsg, setErrMsg] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+
+  const getUser = async () => {
+    try {
+      const response = await axiosPrivate.get(`/users/${auth?.id}`);
+      console.log(response?.data);
+      setUser(response.data);
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [user]);
+
+  const handleUpdate = async (e) => {
+    e.preventDefault();
+    const v1 = NAME_REGEX.test(user.fullname);
+    const v2 = USER_REGEX.test(user.username);
+    const v3 = EMAIL_REGEX.test(user.email);
+    if (!v1) {
+      setErrMsg("Invalid name");
+      return;
+    } else if (!v2) {
+      setErrMsg("Invalid username");
+      return;
+    } else if (!v3) {
+      setErrMsg("Invalid email");
+      return;
+    }
+    try {
+      const response = await axiosPrivate.put(
+        `/users`,
+        JSON.stringify({
+          id: auth?.id,
+          user: user.username,
+          email: user.email,
+          fullname: user.fullname,
+        })
+      );
+      console.log(response?.data);
+      setAuth((prev) => ({ ...prev, user: response?.data?.username }));
+      setDisabled(true);
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg("No server response");
+      } else if (err?.response?.status === 400) {
+        setErrMsg("ID parameter is required");
+      } else if (err?.response?.status === 409) {
+        setErrMsg("Username already taken");
+      } else {
+        setErrMsg("User update failed");
+      }
+    }
+  };
 
   return (
     <div>
       <h1 className="text-xl font-semibold">Account</h1>
       <div className="w-full p-5 mt-6 border-2 border-gray-200 rounded-xl">
+        {errMsg && (
+          <p className="w-full p-2 mb-4 font-semibold text-white bg-red-500 rounded-md">
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              className="inline-block w-4 h-4 text-white rounded-full"
+            />{" "}
+            {errMsg}
+          </p>
+        )}
         <h2 className="text-lg font-semibold text-slate-700">
           Personal Information
         </h2>
@@ -35,7 +117,12 @@ const Account = () => {
               <input
                 type="text"
                 id="fullname"
-                className="block w-full p-2 mt-2 border-2 border-gray-400 rounded-md"
+                value={user.fullname}
+                onChange={(e) => setUser({ ...user, fullname: e.target.value })}
+                disabled={disabledInput}
+                className={`block w-full p-2 mt-2 border-2 border-gray-400 ${
+                  disabledInput && "bg-gray-200 text-gray-500"
+                } rounded-md`}
               />
             </div>
             <div>
@@ -43,15 +130,25 @@ const Account = () => {
               <input
                 type="email"
                 id="email"
-                className="block w-full p-2 mt-2 border-2 border-gray-400 rounded-md"
+                value={user.email}
+                onChange={(e) => setUser({ ...user, email: e.target.value })}
+                disabled={disabledInput}
+                className={`block w-full p-2 mt-2 border-2 border-gray-400 ${
+                  disabledInput && "bg-gray-200 text-gray-500"
+                } rounded-md`}
               />
             </div>
             <div>
-              <label htmlFor="phone">Phone Number</label>
+              <label htmlFor="username">Username</label>
               <input
                 type="text"
-                id="phone"
-                className="block w-full p-2 mt-2 border-2 border-gray-400 rounded-md"
+                id="username"
+                value={user.username}
+                onChange={(e) => setUser({ ...user, username: e.target.value })}
+                disabled={disabledInput}
+                className={`block w-full p-2 mt-2 border-2 border-gray-400 ${
+                  disabledInput && "bg-gray-200 text-gray-500"
+                } rounded-md`}
               />
             </div>
           </div>
@@ -80,12 +177,36 @@ const Account = () => {
             >
               Logout
             </button>
-            <button
-              type="button"
-              className="p-2 font-semibold text-gray-400 border-2 border-gray-400 rounded-md"
-            >
-              Edit
-            </button>
+            {disabledInput ? (
+              <button
+                type="button"
+                className={`p-2 font-semibold text-gray-400 border-2 border-gray-400 hover:bg-gray-400 hover:text-gray-50 transition duration-200 rounded-md`}
+                onClick={() => setDisabled(false)}
+              >
+                Edit
+              </button>
+            ) : (
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  className={`p-2 font-semibold  text-gray-50 border-2 bg-red-400 border-red-400 hover:bg-gray-50 hover:text-red-400 transition duration-200 rounded-md`}
+                  onClick={() => {
+                    setDisabled(true);
+                    getUser();
+                    setErrMsg("");
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  className={`p-2 font-semibold  text-blue-400 border-2 border-blue-400 hover:bg-blue-400 hover:text-gray-50 transition duration-200 rounded-md`}
+                  onClick={handleUpdate}
+                >
+                  Update
+                </button>
+              </div>
+            )}
           </div>
         </form>
       </div>
