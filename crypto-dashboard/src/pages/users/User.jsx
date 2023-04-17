@@ -85,10 +85,6 @@ const User = () => {
                     <ul className="ml-6">
                       <li>
                         <p>
-                          ID:{" "}
-                          <span className="font-semibold">{product._id}</span>
-                        </p>
-                        <p>
                           Name:{" "}
                           <span className="font-semibold">{product.name}</span>
                         </p>
@@ -99,12 +95,8 @@ const User = () => {
                           </span>
                         </p>
                         <p>
-                          Stock:{" "}
-                          <span className="font-semibold">{product.stock}</span>
-                        </p>
-                        <p>
-                          Tags:{" "}
-                          <span className="font-semibold">{product.tags}</span>
+                          Total Bought:{" "}
+                          <span className="font-semibold">{product.total}</span>
                         </p>
                         <img
                           src={product.imgUrl}
