@@ -40,7 +40,12 @@ const handleAuth = async (req, res) => {
       sameSite: "None",
       secure: true,
     });
-    res.json({ user: foundUser.username, accessToken, roles });
+    res.json({
+      id: foundUser._id,
+      user: foundUser.username,
+      accessToken,
+      roles,
+    });
   } else {
     res.status(401).json({ message: "Bad credentials." });
   }

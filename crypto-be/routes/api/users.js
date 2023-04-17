@@ -8,11 +8,11 @@ router
   .route("/")
   .get(verifyRoles(roles_list.Admin), usersController.getAllUsers)
   .post(verifyRoles(roles_list.Admin), usersController.createNewUser)
-  .put(verifyRoles(roles_list.Admin), usersController.updateUser)
-  .delete(verifyRoles(roles_list.Admin), usersController.deleteUser);
+  .put(verifyRoles(roles_list.Admin), usersController.updateUser);
 
 router
   .route("/:id")
-  .get(verifyRoles(roles_list.Admin), usersController.getUser);
+  .get(verifyRoles(roles_list.Admin), usersController.getUser)
+  .delete(verifyRoles(roles_list.Admin), usersController.deleteUser);
 
 module.exports = router;

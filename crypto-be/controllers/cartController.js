@@ -19,8 +19,8 @@ const buyProduct = async (req, res) => {
 
   if (product.stock < total)
     return res.status(400).json({ message: "Product stock is not sufficient" });
-  product.stock -= total;
-  product.sold += total;
+  product.stock -= parseInt(total);
+  product.sold += parseInt(total);
 
   const userProduct = user.cart.products.find(
     (pro) => pro.name == product.name
@@ -30,21 +30,66 @@ const buyProduct = async (req, res) => {
     const filteredProducts = user.cart.products.filter(
       (pro) => pro.name !== product.name
     );
-    user.cart.products = [...filteredProducts, product];
+    const updatedProduct = {
+      name: userProduct.name,
+      price: userProduct.price,
+      imgUrl: userProduct.imgUrl,
+      total: userProduct.total + parseInt(total),
+    };
+    user.cart.products = [...filteredProducts, updatedProduct];
   } else {
     console.log("product is not found");
-    user.cart.products = [...user.cart.products, product];
+    const newProduct = {
+      name: product.name,
+      price: product.price,
+      imgUrl: product.imgUrl,
+      total: parseInt(total),
+    };
+    user.cart.products = [...user.cart.products, newProduct];
   }
 
-  user.cart.totalPrice += total * product.price;
+  user.cart.totalPrice += parseInt(total) * product.price;
   user.cart.paid = false;
 
   const result = await user.save();
-  const updatedProduct = await product.save();
+  await product.save();
 
-  console.log(updatedProduct);
+  console.log(result?.cart?.products);
 
   res.json(result);
+};
+
+const updateProduct = async (req, res) => {
+  const { userId, productName, method } = req?.body;
+  if (!userId || !productName || !method)
+    return res
+      .status(400)
+      .json({ message: "Userid, productId, and method are required." });
+  const foundUser = await User.findOne({ _id: userId }).exec();
+  if (!foundUser) return res.status(404).json({ message: "User is not found" });
+  const product = foundUser.cart.products.find(
+    (pro) => pro.name === productName
+  );
+  const foundProduct = await Product.findOne({ name: productName }).exec();
+  if (!product || !foundProduct)
+    return res.status(404).json({ message: "Product is not found" });
+  if (method === "add") {
+    product.total += 1;
+    foundProduct.sold += 1;
+    foundProduct.stock -= 1;
+  } else if (method === "sub") {
+    product.total -= 1;
+    foundProduct.sold -= 1;
+    foundProduct.stock += 1;
+  }
+
+  const filteredProducts = foundUser.cart.products.filter(
+    (pro) => pro.name !== productName
+  );
+  foundUser.cart.products = [...filteredProducts, product];
+  await foundUser.save();
+  await foundProduct.save();
+  return res.json(product);
 };
 
 const payCart = async (req, res) => {
@@ -63,4 +108,5 @@ const payCart = async (req, res) => {
 module.exports = {
   buyProduct,
   payCart,
+  updateProduct,
 };

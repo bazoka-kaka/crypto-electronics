@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { faAngleLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
 
 const Product = ({ products }) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
+  const axiosPrivate = useAxiosPrivate();
+  const { auth } = useAuth();
 
   const handleGoBack = (e) => {
     e.preventDefault();
@@ -17,6 +21,18 @@ const Product = ({ products }) => {
   useEffect(() => {
     setProduct(products.find((pro) => pro._id === id));
   }, [id, products]);
+
+  const addToCart = async () => {
+    try {
+      const response = await axiosPrivate.post(
+        "/carts/buy",
+        JSON.stringify({ userId: auth?.id, productId: id, total: 1 })
+      );
+      console.log(JSON.stringify(response?.data));
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
 
   return !product ? (
     <p>Loading...</p>
@@ -28,7 +44,9 @@ const Product = ({ products }) => {
         </div>
         <div className="w-3/5 pl-5">
           <h1 className="text-2xl uppercase">{product.name}</h1>
-          <p className="mt-2">Stock: 1 | Sold: 50</p>
+          <p className="mt-2">
+            Stock: {product.stock} | Sold: {product.sold}
+          </p>
           <h2 className="mt-6 text-2xl font-bold">${product.price}</h2>
           <p className="mt-6">{product.description}</p>
           {/* cta */}
@@ -36,7 +54,10 @@ const Product = ({ products }) => {
             <button className="px-12 py-3 font-bold transition duration-200 border-2 border-black rounded-md hover:bg-gray-100">
               Chat
             </button>
-            <button className="px-12 py-3 font-bold text-white transition duration-200 bg-black border-2 border-black rounded-md hover:bg-gray-50 hover:text-black">
+            <button
+              onClick={addToCart}
+              className="px-12 py-3 font-bold text-white transition duration-200 bg-black border-2 border-black rounded-md hover:bg-gray-50 hover:text-black"
+            >
               Add to cart
             </button>
           </div>
