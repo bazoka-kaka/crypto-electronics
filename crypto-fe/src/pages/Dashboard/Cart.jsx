@@ -1,33 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import useLogout from "../../hooks/useLogout";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import useAuth from "../../hooks/useAuth";
 
 const Cart = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const logout = useLogout();
-  const [products] = useState([
-    {
-      id: 1,
-      name: "Product One",
-      price: 500,
-      totBought: 2,
-      totPrice: 1000,
-    },
-    {
-      id: 2,
-      name: "Product Two",
-      price: 700,
-      totBought: 3,
-      totPrice: 2100,
-    },
-    {
-      id: 3,
-      name: "Product Three",
-      price: 2000,
-      totBought: 1,
-      totPrice: 2000,
-    },
-  ]);
+  const [products, setProducts] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+  const { auth } = useAuth();
+
+  const getProducts = async () => {
+    try {
+      const response = await axiosPrivate.get(`/users/${auth?.id}`);
+      const resProducts = response?.data?.cart?.products;
+      setProducts(resProducts);
+      setIsLoading(false);
+    } catch (err) {
+      console.error(err?.message);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
 
   return (
     <div>
@@ -47,9 +46,11 @@ const Cart = () => {
         <div className="mt-4">
           {/* product card */}
           {products?.length ? (
-            products?.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            products?.map((product, i) => (
+              <ProductCard key={i} product={product} />
             ))
+          ) : isLoading ? (
+            <p>Loading...</p>
           ) : (
             <p>No products found</p>
           )}

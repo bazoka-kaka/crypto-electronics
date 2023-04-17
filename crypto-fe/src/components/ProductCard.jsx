@@ -13,7 +13,7 @@ const ProductCard = ({ product }) => {
         <p className="text-gray-700">
           Total Bought:{" "}
           <FontAwesomeIcon className="cursor-pointer" icon={faMinusCircle} />{" "}
-          <span className="font-semibold">{product?.totBought}</span>{" "}
+          <span className="font-semibold">{product?.total}</span>{" "}
           <FontAwesomeIcon className="cursor-pointer" icon={faPlusCircle} />{" "}
           <FontAwesomeIcon
             className="text-red-600 transition duration-200 cursor-pointer hover:text-red-500"
@@ -26,8 +26,10 @@ const ProductCard = ({ product }) => {
           Details
         </button>
         <p className="mt-2 text-right">
-          Total price:{" "}
-          <span className="font-semibold">${product?.totPrice}</span>
+          Total to be paid:{" "}
+          <span className="font-semibold">
+            ${product?.total * product?.price}
+          </span>
         </p>
       </div>
     </div>
