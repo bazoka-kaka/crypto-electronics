@@ -49,6 +49,9 @@ const updateUser = async (req, res) => {
   if (req?.body?.fullname) foundUser.fullname = req.body.fullname;
   if (req?.body?.roles) foundUser.roles = req.body.roles;
   if (req?.body?.pwd) {
+    const match = await bcrypt.compare(req.body.oldPwd, foundUser.password);
+    if (!match)
+      return res.status(401).json({ message: "Old password is wrong" });
     const hashedPwd = await bcrypt.hash(req.body.pwd, 10);
     foundUser.password = hashedPwd;
   }
