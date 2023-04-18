@@ -48,18 +48,22 @@ function App() {
     }
   }, [selectedTags, products]);
 
+  useEffect(() => {
+    products?.forEach((product) => {
+      const tmpTags = product.tags.split(",");
+      tmpTags.forEach((tag) => {
+        const found = tags?.includes(tag);
+        if (!found) {
+          setTags([...tags, tag]);
+        }
+      });
+    });
+  }, [products, tags]);
+
   const getProducts = async () => {
     try {
       const response = await axios.get("/products");
-      response?.data?.forEach((product) => {
-        const tmpTags = product.tags.split(",");
-        tmpTags.forEach((tag) => {
-          const found = tags?.includes(tag);
-          if (!found) {
-            setTags([...tags, tag]);
-          }
-        });
-      });
+
       setProducts(response?.data);
     } catch (err) {
       console.error(err?.message);

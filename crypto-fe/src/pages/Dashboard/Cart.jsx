@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ProductCard from "../../components/ProductCard";
 import useLogout from "../../hooks/useLogout";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -9,18 +9,33 @@ const Cart = () => {
   const [isLoading, setIsLoading] = useState(true);
   const logout = useLogout();
   const [products, setProducts] = useState([]);
+  const [totPrice, setTotPrice] = useState(0);
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const getProducts = async () => {
     try {
       const response = await axiosPrivate.get(`/users/${auth?.id}`);
       const resProducts = response?.data?.cart?.products;
       setProducts(resProducts);
+      setTotPrice(response?.data?.cart?.totalPrice);
       setIsLoading(false);
     } catch (err) {
       console.error(err?.message);
       setIsLoading(false);
+    }
+  };
+
+  const payCart = async () => {
+    try {
+      await axiosPrivate.post(
+        "/carts/pay",
+        JSON.stringify({ userId: auth?.id })
+      );
+      navigate(0);
+    } catch (err) {
+      console.error(err?.message);
     }
   };
 
@@ -60,6 +75,20 @@ const Cart = () => {
           ) : (
             <p>No products found</p>
           )}
+          {products?.length ? (
+            <div className="flex items-center justify-between px-4 py-2 mt-4 border-2 border-gray-200 rounded-md">
+              <p>
+                Total price: <span className="font-semibold">${totPrice}</span>
+              </p>
+              <button
+                type="button"
+                onClick={payCart}
+                className="px-3 py-[3px] font-semibold text-gray-50 transition duration-200  bg-green-500 text-lg rounded-md hover:bg-green-400 hover:text-gray-50"
+              >
+                Pay Cart
+              </button>
+            </div>
+          ) : null}
         </div>
         <div className="flex justify-between mt-8">
           <button

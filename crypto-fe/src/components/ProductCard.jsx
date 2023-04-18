@@ -23,12 +23,14 @@ const ProductCard = ({ product, setProducts, products, getProducts }) => {
           method,
         })
       );
-      const filteredProducts = products.filter(
-        (pro) => pro.name !== product.name
-      );
-      if (method === "add") product.total += 1;
-      else product.total -= 1;
-      setProducts([...filteredProducts, product]);
+      getProducts();
+      navigate(0);
+      // const filteredProducts = products.filter(
+      //   (pro) => pro.name !== product.name
+      // );
+      // if (method === "add") product.total += 1;
+      // else product.total -= 1;
+      // setProducts([...filteredProducts, product]);
     } catch (err) {
       console.error(err?.message);
     }

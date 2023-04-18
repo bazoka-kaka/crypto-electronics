@@ -77,13 +77,28 @@ const updateProduct = async (req, res) => {
   const foundProduct = await Product.findOne({ name: productName }).exec();
   if (!product || !foundProduct)
     return res.status(404).json({ message: "Product is not found" });
+  let newProduct = {};
   if (method === "add") {
-    product.total = product.total + 1;
+    newProduct = {
+      id: product.id,
+      name: product.name,
+      stock: product.stock - 1,
+      price: product.price,
+      imgUrl: product.imgUrl,
+      total: product.total + 1,
+    };
     foundProduct.sold = foundProduct.sold + 1;
     foundProduct.stock = foundProduct.stock - 1;
     foundUser.cart.totalPrice = foundUser.cart.totalPrice + product.price;
   } else if (method === "sub") {
-    product.total = product.total - 1;
+    newProduct = {
+      id: product.id,
+      name: product.name,
+      stock: product.stock + 1,
+      price: product.price,
+      imgUrl: product.imgUrl,
+      total: product.total - 1,
+    };
     foundProduct.sold = foundProduct.sold - 1;
     foundProduct.stock = foundProduct.stock + 1;
     foundUser.cart.totalPrice = foundUser.cart.totalPrice - product.price;
@@ -92,10 +107,14 @@ const updateProduct = async (req, res) => {
   const filteredProducts = foundUser.cart.products.filter(
     (pro) => pro.name !== productName
   );
-  const unsortedProducts = [...filteredProducts, product];
-  foundUser.cart.products = unsortedProducts?.sort((a, b) =>
-    a.id > b.id ? 1 : a.id < b.id ? -1 : 0
-  );
+  if (newProduct.total !== 0) {
+    const unsortedProducts = [...filteredProducts, newProduct];
+    foundUser.cart.products = unsortedProducts?.sort((a, b) =>
+      a.id > b.id ? 1 : a.id < b.id ? -1 : 0
+    );
+  } else {
+    foundUser.cart.products = filteredProducts;
+  }
 
   const result = await foundUser.save();
   await foundProduct.save();
@@ -122,6 +141,7 @@ const deleteProduct = async (req, res) => {
   foundUser.cart.products = foundUser.cart.products.filter(
     (pro) => pro.name !== req.body.name
   );
+  foundUser.cart.totalPrice -= product.total * product.price;
 
   await foundProduct.save();
   await foundUser.save();
