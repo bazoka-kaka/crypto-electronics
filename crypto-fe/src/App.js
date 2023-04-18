@@ -48,37 +48,27 @@ function App() {
     }
   }, [selectedTags, products]);
 
+  const getProducts = async () => {
+    try {
+      const response = await axios.get("/products");
+      response?.data?.forEach((product) => {
+        const tmpTags = product.tags.split(",");
+        tmpTags.forEach((tag) => {
+          const found = tags?.includes(tag);
+          if (!found) {
+            setTags([...tags, tag]);
+          }
+        });
+      });
+      setProducts(response?.data);
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
+
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
-    const getProducts = async () => {
-      try {
-        const response = await axios.get("/products", {
-          signal: controller.signal,
-        });
-        response?.data?.forEach((product) => {
-          const tmpTags = product.tags.split(",");
-          tmpTags.forEach((tag) => {
-            const found = tags?.includes(tag);
-            if (!found) {
-              setTags([...tags, tag]);
-            }
-          });
-        });
-        isMounted && setProducts(response?.data);
-      } catch (err) {
-        console.error(err?.message);
-      }
-    };
-
     getProducts();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
-  }, [tags]);
+  }, []);
 
   return (
     <Routes>
@@ -109,7 +99,9 @@ function App() {
             />
             <Route
               path="/products/:id"
-              element={<Product products={products} />}
+              element={
+                <Product getProducts={getProducts} products={products} />
+              }
             />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />

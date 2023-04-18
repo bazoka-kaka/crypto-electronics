@@ -41,7 +41,7 @@ const Sidebar = () => {
           to="/dashboard/cart"
           className={`p-2 pr-24 font-semibold border-2 ${
             pathname === "/dashboard/cart"
-              ? "border-black bg-gray-100"
+              ? "border-blue-500 bg-gray-100"
               : "border-gray-200"
           } rounded-xl flex items-center gap-3`}
         >
@@ -65,7 +65,7 @@ const Sidebar = () => {
           to="/dashboard/security"
           className={`p-2 pr-24 font-semibold border-2 ${
             pathname === "/dashboard/security"
-              ? "border-black bg-gray-100"
+              ? "border-blue-500 bg-gray-100"
               : "border-gray-200"
           } rounded-xl flex items-center gap-3`}
         >

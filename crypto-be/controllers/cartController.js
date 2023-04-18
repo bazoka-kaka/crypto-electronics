@@ -103,6 +103,32 @@ const updateProduct = async (req, res) => {
   return res.json(product);
 };
 
+const deleteProduct = async (req, res) => {
+  console.log(req.body);
+  if (!req?.body?.name || !req?.body?.userId)
+    return res
+      .status(400)
+      .json({ message: "Product name and user id are required" });
+  const foundUser = await User.findOne({ _id: req.body.userId }).exec();
+  if (!foundUser) return res.status(404).json({ message: "User not found" });
+  const foundProduct = await Product.findOne({ name: req.body.name }).exec();
+  if (!foundProduct)
+    return res.status(404).json({ message: "Product not found" });
+  const product = foundUser.cart.products.find(
+    (pro) => pro.name === req.body.name
+  );
+  foundProduct.sold -= product.total;
+  foundProduct.stock += product.total;
+  foundUser.cart.products = foundUser.cart.products.filter(
+    (pro) => pro.name !== req.body.name
+  );
+
+  await foundProduct.save();
+  await foundUser.save();
+
+  res.sendStatus(204);
+};
+
 const payCart = async (req, res) => {
   const { userId } = req?.body;
   if (!userId)
@@ -120,4 +146,5 @@ module.exports = {
   buyProduct,
   payCart,
   updateProduct,
+  deleteProduct,
 };

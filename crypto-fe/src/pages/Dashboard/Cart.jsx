@@ -52,6 +52,7 @@ const Cart = () => {
                 product={product}
                 setProducts={setProducts}
                 products={products}
+                getProducts={getProducts}
               />
             ))
           ) : isLoading ? (

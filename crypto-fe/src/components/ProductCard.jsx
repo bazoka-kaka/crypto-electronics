@@ -6,10 +6,12 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import useAuth from "../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
-const ProductCard = ({ product, setProducts, products }) => {
+const ProductCard = ({ product, setProducts, products, getProducts }) => {
   const axiosPrivate = useAxiosPrivate();
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const updateProduct = async (method) => {
     try {
@@ -27,6 +29,19 @@ const ProductCard = ({ product, setProducts, products }) => {
       if (method === "add") product.total += 1;
       else product.total -= 1;
       setProducts([...filteredProducts, product]);
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
+
+  const deleteProduct = async () => {
+    try {
+      await axiosPrivate.post(
+        `/carts/products/delete`,
+        JSON.stringify({ userId: auth?.id, name: product.name })
+      );
+      getProducts();
+      navigate(0);
     } catch (err) {
       console.error(err?.message);
     }
@@ -55,6 +70,7 @@ const ProductCard = ({ product, setProducts, products }) => {
           />{" "}
           <FontAwesomeIcon
             className="text-red-600 transition duration-200 cursor-pointer hover:text-red-500"
+            onClick={deleteProduct}
             icon={faTrashAlt}
           />
         </p>
