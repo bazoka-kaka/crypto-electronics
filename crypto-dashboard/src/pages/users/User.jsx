@@ -85,6 +85,10 @@ const User = () => {
                     <ul className="ml-6">
                       <li>
                         <p>
+                          ID:{" "}
+                          <span className="font-semibold">{product.id}</span>
+                        </p>
+                        <p>
                           Name:{" "}
                           <span className="font-semibold">{product.name}</span>
                         </p>

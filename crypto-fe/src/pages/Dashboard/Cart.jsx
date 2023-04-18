@@ -47,7 +47,12 @@ const Cart = () => {
           {/* product card */}
           {products?.length ? (
             products?.map((product, i) => (
-              <ProductCard key={i} product={product} />
+              <ProductCard
+                key={i}
+                product={product}
+                setProducts={setProducts}
+                products={products}
+              />
             ))
           ) : isLoading ? (
             <p>Loading...</p>

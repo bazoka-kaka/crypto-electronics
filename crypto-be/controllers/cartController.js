@@ -31,7 +31,9 @@ const buyProduct = async (req, res) => {
       (pro) => pro.name !== product.name
     );
     const updatedProduct = {
+      id: userProduct.id,
       name: userProduct.name,
+      stock: userProduct.stock,
       price: userProduct.price,
       imgUrl: userProduct.imgUrl,
       total: userProduct.total + parseInt(total),
@@ -40,7 +42,9 @@ const buyProduct = async (req, res) => {
   } else {
     console.log("product is not found");
     const newProduct = {
+      id: user.cart.products[user.cart.products?.length - 1]?.id + 1 || 0,
       name: product.name,
+      stock: product.stock,
       price: product.price,
       imgUrl: product.imgUrl,
       total: parseInt(total),
@@ -74,21 +78,28 @@ const updateProduct = async (req, res) => {
   if (!product || !foundProduct)
     return res.status(404).json({ message: "Product is not found" });
   if (method === "add") {
-    product.total += 1;
-    foundProduct.sold += 1;
-    foundProduct.stock -= 1;
+    product.total = product.total + 1;
+    foundProduct.sold = foundProduct.sold + 1;
+    foundProduct.stock = foundProduct.stock - 1;
+    foundUser.cart.totalPrice = foundUser.cart.totalPrice + product.price;
   } else if (method === "sub") {
-    product.total -= 1;
-    foundProduct.sold -= 1;
-    foundProduct.stock += 1;
+    product.total = product.total - 1;
+    foundProduct.sold = foundProduct.sold - 1;
+    foundProduct.stock = foundProduct.stock + 1;
+    foundUser.cart.totalPrice = foundUser.cart.totalPrice - product.price;
   }
 
   const filteredProducts = foundUser.cart.products.filter(
     (pro) => pro.name !== productName
   );
-  foundUser.cart.products = [...filteredProducts, product];
-  await foundUser.save();
+  const unsortedProducts = [...filteredProducts, product];
+  foundUser.cart.products = unsortedProducts?.sort((a, b) =>
+    a.id > b.id ? 1 : a.id < b.id ? -1 : 0
+  );
+
+  const result = await foundUser.save();
   await foundProduct.save();
+  console.log(result?.cart?.products);
   return res.json(product);
 };
 
