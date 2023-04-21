@@ -37,6 +37,14 @@ const UserSchema = new Schema({
       default: false,
     },
   },
+  notifications: {
+    Offers: {
+      type: Number,
+      default: 2000,
+    },
+    Payment: Number,
+    Updates: Number,
+  },
   refreshToken: String,
 });
 

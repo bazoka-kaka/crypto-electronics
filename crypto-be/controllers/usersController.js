@@ -1,5 +1,6 @@
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+const NOTIF_LIST = require("../config/notif_list");
 
 const getAllUsers = async (req, res) => {
   const users = await User.find().exec();
@@ -48,6 +49,14 @@ const updateUser = async (req, res) => {
   if (req?.body?.email) foundUser.email = req.body.email;
   if (req?.body?.fullname) foundUser.fullname = req.body.fullname;
   if (req?.body?.roles) foundUser.roles = req.body.roles;
+  if (req?.body?.notifs) {
+    const notifs = req.body.notif;
+    foundUser.notifications = {
+      Offers: notifs.find((val) => val === NOTIF_LIST.Offers),
+      Payment: notifs.find((val) => val === NOTIF_LIST.Payment),
+      Updates: notifs.find((val) => val === NOTIF_LIST.Updates),
+    };
+  }
   if (req?.body?.pwd) {
     const match = await bcrypt.compare(req.body.oldPwd, foundUser.password);
     if (!match)

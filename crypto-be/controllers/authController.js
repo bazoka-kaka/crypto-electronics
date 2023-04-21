@@ -16,6 +16,9 @@ const handleAuth = async (req, res) => {
 
   if (match) {
     const roles = Object.values(foundUser.roles).filter(Boolean);
+    const notifications = Object.values(foundUser.notifications).filter(
+      Boolean
+    );
     // create refresh token
     const refreshToken = jwt.sign(
       { username: foundUser.username },
@@ -24,7 +27,13 @@ const handleAuth = async (req, res) => {
     );
     // create access token
     const accessToken = jwt.sign(
-      { UserInfo: { username: foundUser.username, roles } },
+      {
+        UserInfo: {
+          username: foundUser.username,
+          roles,
+          notifications,
+        },
+      },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30s" }
     );
@@ -43,6 +52,7 @@ const handleAuth = async (req, res) => {
     res.json({
       id: foundUser._id,
       user: foundUser.username,
+      notifications,
       accessToken,
       roles,
     });
