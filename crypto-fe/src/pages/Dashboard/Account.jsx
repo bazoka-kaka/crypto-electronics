@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const NAME_REGEX = /^[A-z\s]{4,50}$/;
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const NOTIF_LIST = { Offers: 2000, Payment: 2001, Updates: 2002 };
 
 const Account = () => {
   const logout = useLogout();
@@ -15,12 +16,16 @@ const Account = () => {
   const [user, setUser] = useState({});
   const [disabledInput, setDisabled] = useState(true);
   const [errMsg, setErrMsg] = useState("");
+  const [notifs, setNotifs] = useState([]);
   const axiosPrivate = useAxiosPrivate();
 
   const getUser = async () => {
     try {
       const response = await axiosPrivate.get(`/users/${auth?.id}`);
-      console.log(response?.data);
+      const notifications = Object.values(response?.data?.notifications).filter(
+        Boolean
+      );
+      setNotifs(notifications);
       setUser(response.data);
     } catch (err) {
       console.error(err?.message);
@@ -157,15 +162,30 @@ const Account = () => {
               Notifications
             </h2>
             <div className="mt-2">
-              <input type="checkbox" id="offers" name="notifications" />{" "}
+              <input
+                type="checkbox"
+                id="offers"
+                name="notifications"
+                checked={notifs?.includes(NOTIF_LIST.Offers)}
+              />{" "}
               <label htmlFor="offers">Interesting Offers</label>
             </div>
             <div className="mt-2">
-              <input type="checkbox" id="payment_status" name="notifications" />{" "}
+              <input
+                type="checkbox"
+                id="payment_status"
+                name="notifications"
+                checked={notifs?.includes(NOTIF_LIST.Payment)}
+              />{" "}
               <label htmlFor="payment_status">Payment Status</label>
             </div>
             <div className="mt-2">
-              <input type="checkbox" id="updates" name="notifications" />{" "}
+              <input
+                type="checkbox"
+                id="updates"
+                name="notifications"
+                checked={notifs?.includes(NOTIF_LIST.Updates)}
+              />{" "}
               <label htmlFor="updates">Product Updates</label>
             </div>
           </div>
