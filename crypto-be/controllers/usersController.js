@@ -50,7 +50,7 @@ const updateUser = async (req, res) => {
   if (req?.body?.fullname) foundUser.fullname = req.body.fullname;
   if (req?.body?.roles) foundUser.roles = req.body.roles;
   if (req?.body?.notifs) {
-    const notifs = req.body.notif;
+    const notifs = req.body.notifs;
     foundUser.notifications = {
       Offers: notifs.find((val) => val === NOTIF_LIST.Offers),
       Payment: notifs.find((val) => val === NOTIF_LIST.Payment),

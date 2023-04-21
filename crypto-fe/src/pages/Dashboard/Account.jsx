@@ -63,6 +63,7 @@ const Account = () => {
           user: user.username,
           email: user.email,
           fullname: user.fullname,
+          notifs,
         })
       );
       console.log(response?.data);
@@ -167,6 +168,16 @@ const Account = () => {
                 id="offers"
                 name="notifications"
                 checked={notifs?.includes(NOTIF_LIST.Offers)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setNotifs((prev) => [...prev, NOTIF_LIST.Offers]);
+                  } else {
+                    setNotifs((prev) =>
+                      prev.filter((val) => val !== NOTIF_LIST.Offers)
+                    );
+                  }
+                }}
+                disabled={disabledInput}
               />{" "}
               <label htmlFor="offers">Interesting Offers</label>
             </div>
@@ -176,6 +187,16 @@ const Account = () => {
                 id="payment_status"
                 name="notifications"
                 checked={notifs?.includes(NOTIF_LIST.Payment)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setNotifs((prev) => [...prev, NOTIF_LIST.Payment]);
+                  } else {
+                    setNotifs((prev) =>
+                      prev.filter((val) => val !== NOTIF_LIST.Payment)
+                    );
+                  }
+                }}
+                disabled={disabledInput}
               />{" "}
               <label htmlFor="payment_status">Payment Status</label>
             </div>
@@ -185,6 +206,16 @@ const Account = () => {
                 id="updates"
                 name="notifications"
                 checked={notifs?.includes(NOTIF_LIST.Updates)}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setNotifs((prev) => [...prev, NOTIF_LIST.Updates]);
+                  } else {
+                    setNotifs((prev) =>
+                      prev.filter((val) => val !== NOTIF_LIST.Updates)
+                    );
+                  }
+                }}
+                disabled={disabledInput}
               />{" "}
               <label htmlFor="updates">Product Updates</label>
             </div>
