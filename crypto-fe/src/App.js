@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "./api/axios";
+import axios, { axiosPrivate } from "./api/axios";
 import PersistLogin from "./components/PersistLogin";
 import Register from "./pages/Register";
 import ScrollToTop from "./components/ScrollToTop";
@@ -70,6 +70,18 @@ function App() {
     }
   };
 
+  const createNotifications = async (userId, title, description, link) => {
+    try {
+      const response = await axiosPrivate.post(
+        "/notifications",
+        JSON.stringify({ userId, title, description, link })
+      );
+      console.log(response?.data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
   useEffect(() => {
     getProducts();
   }, []);
@@ -104,7 +116,11 @@ function App() {
             <Route
               path="/products/:id"
               element={
-                <Product getProducts={getProducts} products={products} />
+                <Product
+                  createNotifications={createNotifications}
+                  getProducts={getProducts}
+                  products={products}
+                />
               }
             />
             <Route path="/register" element={<Register />} />

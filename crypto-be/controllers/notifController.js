@@ -1,25 +1,27 @@
 const Notification = require("../model/Notification");
 
 const getUserNotifications = async (req, res) => {
-  const { userId } = req?.body;
-  if (!userId)
+  const { id } = req?.params;
+  if (!id)
     return res.status(400).json({ message: "User id parameter is required" });
-  const notifications = await Notification.find({ userId }).exec();
+  const notifications = await Notification.find({ userId: id }).exec();
   if (!notifications) return res.sendStatus(204);
   res.json(notifications);
 };
 
 const createNewNotification = async (req, res) => {
-  const { userId, title, description } = req?.body;
-  if (!userId || !title || !description)
+  const { userId, title, description, link } = req?.body;
+  if (!userId || !title || !description || !link)
     return res
       .status(400)
-      .json({ message: "User id, title, and description are required" });
+      .json({ message: "User id, title, link and description are required" });
   const result = await Notification.create({
     userId,
     title,
     description,
+    link,
   });
+  console.log(result);
   res.status(201).json(result);
 };
 

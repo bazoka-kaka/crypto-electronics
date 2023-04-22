@@ -1,32 +1,32 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import useAxiosPrivate from "../hooks/useAxiosPrivate";
+import useAuth from "../hooks/useAuth";
 
 const Notifications = () => {
-  const [notifications, setNotifications] = useState([
-    {
-      id: 1,
-      userId: "643c30501edee771ad81ed91",
-      title: "Notification One",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      link: "/",
-    },
-    {
-      id: 2,
-      userId: "643c30501edee771ad81ed91",
-      title: "Notification Two",
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-      link: "/",
-    },
-  ]);
-
+  const axiosPrivate = useAxiosPrivate();
+  const { auth } = useAuth();
+  const [notifications, setNotifications] = useState([]);
   const handleDelete = async (id) => {
     // delete
     setNotifications((prev) => prev.filter((val) => val.id !== id));
   };
+
+  const getNotifications = async () => {
+    try {
+      const response = await axiosPrivate.get(`/notifications/${auth.id}`);
+      console.log(response?.data);
+      setNotifications(response.data);
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
+
+  useEffect(() => {
+    getNotifications();
+  }, []);
 
   return (
     <div className="pt-12 pb-48">
