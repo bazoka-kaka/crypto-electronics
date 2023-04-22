@@ -162,9 +162,33 @@ const payCart = async (req, res) => {
   res.json(result);
 };
 
+const clearCart = async (req, res) => {
+  const { id: userId } = req?.params;
+  if (!userId)
+    return res.status(400).json({ message: "User ID parameter is required." });
+  const foundUser = await User.findOne({ _id: userId }).exec();
+  const userProducts = foundUser.cart.products;
+  // return stocks of products
+  userProducts.forEach((product) => {
+    const normalizeProduct = async () => {
+      const pro = await Product.findOne({ name: product.name }).exec();
+      if (!pro) return;
+      pro.stock += product.total;
+      pro.sold -= product.total;
+      await pro.save();
+    };
+    normalizeProduct();
+  });
+  foundUser.cart.products = [];
+  foundUser.cart.totalPrice = 0;
+  const result = await foundUser.save();
+  res.json(result);
+};
+
 module.exports = {
   buyProduct,
   payCart,
   updateProduct,
   deleteProduct,
+  clearCart,
 };

@@ -32,7 +32,9 @@ const Notifications = () => {
     try {
       const response = await axiosPrivate.get(`/notifications/${auth.id}`);
       console.log(response?.data);
-      setNotifications(response.data);
+      const arr = response?.data;
+      arr.reverse();
+      setNotifications(arr);
     } catch (err) {
       console.error(err?.message);
     }

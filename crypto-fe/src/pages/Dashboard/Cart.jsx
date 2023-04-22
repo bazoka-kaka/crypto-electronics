@@ -5,7 +5,13 @@ import useLogout from "../../hooks/useLogout";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 
-const Cart = () => {
+const NOTIF_LIST = {
+  Offers: 2000,
+  Payment: 2001,
+  Updates: 2002,
+};
+
+const Cart = ({ createNotifications }) => {
   const [isLoading, setIsLoading] = useState(true);
   const logout = useLogout();
   const [products, setProducts] = useState([]);
@@ -33,6 +39,13 @@ const Cart = () => {
         "/carts/pay",
         JSON.stringify({ userId: auth?.id })
       );
+      createNotifications(
+        auth.id,
+        "Cart Paid",
+        "Your cart payment is successful. Your order is being delivered immediately",
+        "/dashboard/cart",
+        NOTIF_LIST.Payment
+      );
       navigate(0);
     } catch (err) {
       console.error(err?.message);
@@ -42,6 +55,24 @@ const Cart = () => {
   useEffect(() => {
     getProducts();
   }, []);
+
+  const clearCart = async (e) => {
+    e.preventDefault();
+    try {
+      const result = await axiosPrivate.delete(`/carts/${auth?.id}`);
+      console.log(result);
+      createNotifications(
+        auth.id,
+        "Cart is cleared",
+        "Your cart is successfully cleared without payment",
+        "/dashboard/cart",
+        NOTIF_LIST.Payment
+      );
+      navigate(0);
+    } catch (err) {
+      console.error(err?.message);
+    }
+  };
 
   return (
     <div>
@@ -80,13 +111,21 @@ const Cart = () => {
               <p>
                 Total price: <span className="font-semibold">${totPrice}</span>
               </p>
-              <button
-                type="button"
-                onClick={payCart}
-                className="px-3 py-[3px] font-semibold text-gray-50 transition duration-200  bg-green-500 text-lg rounded-md hover:bg-green-400 hover:text-gray-50"
-              >
-                Pay Cart
-              </button>
+              <div className="flex items-center gap-4">
+                <button
+                  className="text-blue-500 transition duration-200 hover:text-red-500"
+                  onClick={clearCart}
+                >
+                  Clear cart
+                </button>
+                <button
+                  type="button"
+                  onClick={payCart}
+                  className="px-3 py-[3px] font-semibold text-gray-50 transition duration-200  bg-green-500 text-lg rounded-md hover:bg-green-400 hover:text-gray-50"
+                >
+                  Pay Cart
+                </button>
+              </div>
             </div>
           ) : null}
         </div>

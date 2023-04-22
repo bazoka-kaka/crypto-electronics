@@ -160,7 +160,10 @@ function App() {
             </Route>
             <Route element={<ProtectedLayout />}>
               <Route path="/dashboard" element={<Account />} />
-              <Route path="/dashboard/cart" element={<Cart />} />
+              <Route
+                path="/dashboard/cart"
+                element={<Cart createNotifications={createNotifications} />}
+              />
               <Route path="/dashboard/security" element={<Security />} />
             </Route>
           </Route>
