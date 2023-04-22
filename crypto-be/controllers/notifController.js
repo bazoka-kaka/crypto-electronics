@@ -27,15 +27,14 @@ const createNewNotification = async (req, res) => {
 
 const deleteNotification = async (req, res) => {
   const { id } = req?.params;
-  if (id) return res.status(400).json({ message: "ID parameter is required" });
-  const notification = await Notification.findOne({ _id: id }).exec();
-  if (!notification) return res.sendStatus(204);
-  await Notification.deleteOne({ _id: id });
+  if (!id) return res.status(400).json({ message: "ID parameter is required" });
+  const notification = await Notification.deleteOne({ _id: id });
+  console.log(notification);
   res.sendStatus(204);
 };
 
 const clearNotifications = async (req, res) => {
-  const { userId } = req?.body;
+  const { id: userId } = req?.params;
   if (!userId)
     return res.status(400).json({ message: "User id parameter is required" });
   await Notification.deleteMany({ userId }).exec();

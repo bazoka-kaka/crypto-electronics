@@ -17,6 +17,7 @@ const Account = () => {
   const [disabledInput, setDisabled] = useState(true);
   const [errMsg, setErrMsg] = useState("");
   const [notifs, setNotifs] = useState([]);
+  const [showProfileInput, setShowProfileInput] = useState(false);
   const axiosPrivate = useAxiosPrivate();
 
   const getUser = async () => {
@@ -107,12 +108,29 @@ const Account = () => {
               className="object-cover rounded-md w-28 h-28"
             />
             <div className="flex items-center gap-8">
-              <button className="px-4 py-2 font-semibold text-blue-600 transition duration-200 border-2 border-blue-600 rounded-md hover:text-gray-50 hover:bg-blue-600">
-                Change
-              </button>
-              <button className="font-semibold text-gray-500 transition duration-200 hover:text-red-400">
-                Delete
-              </button>
+              {showProfileInput ? (
+                <>
+                  <input type="file" />
+                  <button
+                    className="font-semibold text-gray-500 transition duration-200 hover:text-red-400"
+                    onClick={() => setShowProfileInput(false)}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    className="px-4 py-2 font-semibold text-blue-600 transition duration-200 border-2 border-blue-600 rounded-md hover:text-gray-50 hover:bg-blue-600"
+                    onClick={() => setShowProfileInput(true)}
+                  >
+                    Change
+                  </button>
+                  <button className="font-semibold text-gray-500 transition duration-200 hover:text-red-400">
+                    Delete
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const notifController = require("../../controllers/notifController");
 
-router
-  .route("/")
-  .post(notifController.createNewNotification)
-  .delete(notifController.clearNotifications);
+router.route("/").post(notifController.createNewNotification);
+
+router.post("/delete/:id", notifController.clearNotifications);
 
 router
   .route("/:id")
