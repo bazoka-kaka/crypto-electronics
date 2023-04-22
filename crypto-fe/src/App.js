@@ -24,6 +24,12 @@ const ROLES_LIST = {
   Admin: 5150,
 };
 
+const NOTIF_LIST = {
+  Offers: 2000,
+  Payment: 2001,
+  Updates: 2002,
+};
+
 function App() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -70,11 +76,17 @@ function App() {
     }
   };
 
-  const createNotifications = async (userId, title, description, link) => {
+  const createNotifications = async (
+    userId,
+    title,
+    description,
+    link,
+    type
+  ) => {
     try {
       const response = await axiosPrivate.post(
         "/notifications",
-        JSON.stringify({ userId, title, description, link })
+        JSON.stringify({ userId, title, description, link, type })
       );
       console.log(response?.data);
     } catch (err) {
@@ -120,6 +132,7 @@ function App() {
                   createNotifications={createNotifications}
                   getProducts={getProducts}
                   products={products}
+                  NOTIF_LIST={NOTIF_LIST}
                 />
               }
             />

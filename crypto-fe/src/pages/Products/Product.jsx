@@ -9,7 +9,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const Product = ({ products, getProducts, createNotifications }) => {
+const Product = ({
+  products,
+  getProducts,
+  createNotifications,
+  NOTIF_LIST,
+}) => {
   const { id } = useParams();
   const [product, setProduct] = useState({});
   const [count, setCount] = useState(0);
@@ -39,7 +44,8 @@ const Product = ({ products, getProducts, createNotifications }) => {
         auth.id,
         `${product.name} Added`,
         `${count} ${product.name} is successfully added to the cart`,
-        "/dashboard/cart"
+        "/dashboard/cart",
+        NOTIF_LIST.Payment
       );
       navigate("/", { from: location });
     } catch (err) {
