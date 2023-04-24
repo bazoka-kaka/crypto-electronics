@@ -12,7 +12,7 @@ const getUserNotifications = async (req, res) => {
   const allowedNotifications = Object.values(foundUser.notifications).filter(
     Boolean
   );
-  const notifications = await Notification.find().exec();
+  const notifications = await Notification.find({ userId: id }).exec();
   const filteredNotifications = notifications.filter(
     (notif) =>
       allowedNotifications?.indexOf(notif?.type) !== -1 &&
@@ -39,11 +39,22 @@ const createNewNotification = async (req, res) => {
       type,
     });
   } else {
-    result = await Notification.create({
-      title,
-      description,
-      link,
-      type,
+    const users = await User.find().exec();
+    users.forEach((user) => {
+      const createNotif = async () => {
+        try {
+          result = await Notification.create({
+            userId: user._id,
+            title,
+            description,
+            link,
+            type,
+          });
+        } catch (err) {
+          console.error(err?.message);
+        }
+      };
+      createNotif();
     });
   }
 

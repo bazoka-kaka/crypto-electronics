@@ -40,6 +40,8 @@ const updateUser = async (req, res) => {
     return res.status(400).json({ message: "ID parameter is required." });
   const foundUser = await User.findOne({ _id: req.body.id }).exec();
   if (!foundUser) return res.sendStatus(204);
+  const match = await bcrypt.compare(req.body.oldPwd, foundUser.password);
+  if (!match) return res.sendStatus(401);
   if (req?.body?.user) {
     const duplicate = await User.findOne({ username: req.body.user }).exec();
     if (duplicate && duplicate.username !== foundUser.username)
@@ -58,9 +60,6 @@ const updateUser = async (req, res) => {
     };
   }
   if (req?.body?.pwd) {
-    const match = await bcrypt.compare(req.body.oldPwd, foundUser.password);
-    if (!match)
-      return res.status(401).json({ message: "Old password is wrong" });
     const hashedPwd = await bcrypt.hash(req.body.pwd, 10);
     foundUser.password = hashedPwd;
   }

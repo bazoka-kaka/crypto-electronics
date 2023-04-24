@@ -45,6 +45,8 @@ const Update = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
+  const [oldPwd, setOldPwd] = useState("");
+
   const [errMsg, setErrMsg] = useState("");
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const Update = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd, matchPwd, fullname, email]);
+  }, [user, pwd, matchPwd, fullname, email, oldPwd]);
 
   useEffect(() => {
     let isMounted = true;
@@ -114,14 +116,14 @@ const Update = () => {
     const v1 = USER_REGEX.test(user);
     const v2 = NAME_REGEX.test(fullname);
     const v3 = EMAIL_REGEX.test(email);
-    if (!v1 || !v2 || !v3) {
+    if (!v1 || !v2 || !v3 || !oldPwd) {
       setErrMsg("Invalid entries.");
       return;
     }
     try {
       const response = await axiosPrivate.put(
         "/users",
-        JSON.stringify({ id, user, pwd, fullname, email, roles }),
+        JSON.stringify({ id, user, pwd, fullname, email, roles, oldPwd }),
         {
           signal: controller.signal,
         }
@@ -132,6 +134,7 @@ const Update = () => {
       setMatchPwd("");
       setEmail("");
       setFullname("");
+      setOldPwd("");
       setRoles({});
       navigate(from, { replace: true });
     } catch (err) {
@@ -390,6 +393,20 @@ const Update = () => {
             <FontAwesomeIcon icon={faInfoCircle} /> Must match the first
             password input field.
           </p>
+          <label htmlFor="old_pwd" className="block mt-4 font-semibold">
+            Old Password
+          </label>
+          <input
+            type="password"
+            id="old_pwd"
+            autoComplete="off"
+            onChange={(e) => setOldPwd(e.target.value)}
+            value={oldPwd}
+            required
+            onFocus={() => setMatchFocus(true)}
+            onBlur={() => setMatchFocus(false)}
+            className="w-full px-4 py-2 mt-2 border-2 rounded-md border-slate-400"
+          />
           <label htmlFor="roles" className="block mt-4 font-semibold">
             Roles
           </label>
