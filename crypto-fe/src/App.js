@@ -17,6 +17,7 @@ import Cart from "./pages/Dashboard/Cart";
 import Security from "./pages/Dashboard/Security";
 import RequireAuth from "./components/RequireAuth";
 import Notifications from "./pages/Notifications";
+import About from "./pages/About";
 
 const ROLES_LIST = {
   User: 2001,
@@ -114,6 +115,7 @@ function App() {
                 />
               }
             />
+            <Route path="/about" element={<About />} />
             <Route
               path="/products"
               element={
