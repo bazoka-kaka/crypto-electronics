@@ -1,5 +1,6 @@
 const Notification = require("../model/Notification");
 const User = require("../model/User");
+const NOTIF_LIST = require("../config/notif_list");
 
 const getUserNotifications = async (req, res) => {
   const { id } = req?.params;
@@ -11,10 +12,12 @@ const getUserNotifications = async (req, res) => {
   const allowedNotifications = Object.values(foundUser.notifications).filter(
     Boolean
   );
-  const notifications = await Notification.find({ userId: id }).exec();
-  console.log(allowedNotifications, notifications);
+  const notifications = await Notification.find().exec();
   const filteredNotifications = notifications.filter(
-    (notif) => allowedNotifications?.indexOf(notif?.type) !== -1
+    (notif) =>
+      allowedNotifications?.indexOf(notif?.type) !== -1 &&
+      ((notif.type === NOTIF_LIST?.Payment && notif.userId === id) ||
+        notif.type !== NOTIF_LIST.Payment)
   );
   if (!filteredNotifications) return res.sendStatus(204);
   res.json(filteredNotifications);
@@ -22,17 +25,28 @@ const getUserNotifications = async (req, res) => {
 
 const createNewNotification = async (req, res) => {
   const { userId, title, description, link, type } = req?.body;
-  if (!userId || !title || !description || !link || !type)
+  if (!title || !description || !link || !type)
     return res.status(400).json({
-      message: "User id, title, link, type and description are required",
+      message: "Title, link, type and description are required",
     });
-  const result = await Notification.create({
-    userId,
-    title,
-    description,
-    link,
-    type,
-  });
+  let result;
+  if (userId) {
+    result = await Notification.create({
+      userId,
+      title,
+      description,
+      link,
+      type,
+    });
+  } else {
+    result = await Notification.create({
+      title,
+      description,
+      link,
+      type,
+    });
+  }
+
   console.log(result);
   res.status(201).json(result);
 };

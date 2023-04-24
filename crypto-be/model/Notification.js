@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const NotifSchema = new Schema({
-  userId: {
-    type: String,
-    required: true,
-  },
+  userId: String,
   type: Number,
   title: {
     type: String,
