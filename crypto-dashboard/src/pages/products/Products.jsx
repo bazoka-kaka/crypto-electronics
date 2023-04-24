@@ -3,13 +3,13 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import useAuth from "../../hooks/useAuth";
 import { Link } from "react-router-dom";
 
-const Products = () => {
+const Products = ({ createNotifications, NOTIF_LIST }) => {
   const [products, setProducts] = useState([]);
   const axiosPrivate = useAxiosPrivate();
   const [isLoading, setIsLoading] = useState(true);
   const { auth } = useAuth();
 
-  const getUsers = async () => {
+  const getProducts = async () => {
     const controller = new AbortController();
     let isMounted = true;
 
@@ -38,19 +38,26 @@ const Products = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    getProducts();
   }, []);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id, name) => {
     const controller = new AbortController();
 
-    const deleteUser = async () => {
+    const deleteProduct = async () => {
       try {
+        createNotifications(
+          null,
+          "Product Deleted",
+          `Product ${name} has been deleted`,
+          `/products`,
+          NOTIF_LIST.Updates
+        );
         const response = await axiosPrivate.delete(`/products/${id}`, {
           signal: controller.signal,
         });
         console.log(response);
-        getUsers();
+        getProducts();
       } catch (err) {
         if (err.message !== "canceled") {
           console.error(err.message);
@@ -58,9 +65,11 @@ const Products = () => {
       }
     };
 
-    deleteUser();
+    deleteProduct();
 
-    return () => controller.abort();
+    return () => {
+      controller.abort();
+    };
   };
 
   return (
@@ -128,7 +137,7 @@ const Products = () => {
                     )}
                     {auth?.roles?.includes(5150) && (
                       <button
-                        onClick={() => handleDelete(product._id)}
+                        onClick={() => handleDelete(product._id, product.name)}
                         className="px-2 font-semibold text-white bg-red-500 rounded-sm"
                       >
                         Delete

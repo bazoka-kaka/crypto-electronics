@@ -3,7 +3,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Update = () => {
+const Update = ({ createNotifications, NOTIF_LIST }) => {
   const nameRef = useRef();
   const errRef = useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -57,7 +57,7 @@ const Update = () => {
       isMounted = false;
       controller.abort();
     };
-  }, []);
+  }, [axiosPrivate, id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -79,6 +79,13 @@ const Update = () => {
         {
           signal: controller.signal,
         }
+      );
+      createNotifications(
+        null,
+        "Product Updated",
+        `${response.data.name} has been updated successfully`,
+        `/products/${response.data._id}`,
+        NOTIF_LIST.Updates
       );
       console.log(JSON.stringify(response));
       setName("");

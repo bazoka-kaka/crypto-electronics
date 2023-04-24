@@ -13,7 +13,7 @@ const Product = () => {
     let isMounted = true;
     const controller = new AbortController();
 
-    const getUser = async () => {
+    const getProduct = async () => {
       try {
         const response = await axiosPrivate.get(`/products/${id}`, {
           signal: controller.signal,
@@ -29,7 +29,7 @@ const Product = () => {
       }
     };
 
-    getUser();
+    getProduct();
 
     return () => {
       isMounted = false;

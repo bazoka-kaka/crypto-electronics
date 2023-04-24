@@ -3,7 +3,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-const Create = () => {
+const Create = ({ createNotifications, NOTIF_LIST }) => {
   const nameRef = useRef();
   const errRef = useRef();
   const axiosPrivate = useAxiosPrivate();
@@ -47,6 +47,13 @@ const Create = () => {
         {
           signal: controller.signal,
         }
+      );
+      createNotifications(
+        null,
+        "New Product Added",
+        `${response.data.name} has been added and is available for purchase`,
+        `/products/${response.data._id}`,
+        NOTIF_LIST.Updates
       );
       console.log(JSON.stringify(response));
       setName("");

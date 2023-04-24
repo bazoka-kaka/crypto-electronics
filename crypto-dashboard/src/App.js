@@ -1,3 +1,4 @@
+import useAxiosPrivate from "./hooks/useAxiosPrivate";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import UnprotectedLayout from "./components/UnprotectedLayout";
@@ -21,7 +22,32 @@ const ROLES = {
   Admin: 5150,
 };
 
+const NOTIF_LIST = {
+  Offers: 2000,
+  Payment: 2001,
+  Updates: 2002,
+};
+
 function App() {
+  const axiosPrivate = useAxiosPrivate();
+
+  const createNotifications = async (
+    userId,
+    title,
+    description,
+    link,
+    type
+  ) => {
+    try {
+      const response = await axiosPrivate.post(
+        "/notifications",
+        JSON.stringify({ userId, title, description, link, type })
+      );
+      console.log(response?.data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <Routes>
       <Route element={<UnprotectedLayout />}>
@@ -48,10 +74,34 @@ function App() {
           <Route
             element={<RequireAuth allowedRoles={[ROLES.Admin, ROLES.Editor]} />}
           >
-            <Route path="/products" element={<Products />} />
+            <Route
+              path="/products"
+              element={
+                <Products
+                  createNotifications={createNotifications}
+                  NOTIF_LIST={NOTIF_LIST}
+                />
+              }
+            />
             <Route path="/products/:id" element={<Product />} />
-            <Route path="/products/create" element={<CreateProduct />} />
-            <Route path="/products/update/:id" element={<UpdateProduct />} />
+            <Route
+              path="/products/create"
+              element={
+                <CreateProduct
+                  createNotifications={createNotifications}
+                  NOTIF_LIST={NOTIF_LIST}
+                />
+              }
+            />
+            <Route
+              path="/products/update/:id"
+              element={
+                <UpdateProduct
+                  createNotifications={createNotifications}
+                  NOTIF_LIST={NOTIF_LIST}
+                />
+              }
+            />
           </Route>
 
           {/* only for admins */}

@@ -37,10 +37,7 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "ID parameter is required." });
-  const product = await Product.findOne({ _id: req.params.id }).exec();
-  if (!product)
-    return res.status(204).json({ message: "Product is not found." });
-  await product.deleteOne({ _id: req.params.id });
+  const result = await Product.deleteOne({ _id: req.params.id });
   res.sendStatus(204);
 };
 
