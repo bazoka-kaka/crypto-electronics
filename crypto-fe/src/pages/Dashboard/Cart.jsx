@@ -35,16 +35,16 @@ const Cart = ({ createNotifications }) => {
 
   const payCart = async () => {
     try {
-      await axiosPrivate.post(
-        "/carts/pay",
-        JSON.stringify({ userId: auth?.id })
-      );
       createNotifications(
         auth.id,
         "Cart Paid",
         "Your cart payment is successful. Your order is being delivered immediately",
         "/dashboard/cart",
         NOTIF_LIST.Payment
+      );
+      await axiosPrivate.post(
+        "/carts/pay",
+        JSON.stringify({ userId: auth?.id })
       );
       navigate(0);
     } catch (err) {
@@ -59,8 +59,6 @@ const Cart = ({ createNotifications }) => {
   const clearCart = async (e) => {
     e.preventDefault();
     try {
-      const result = await axiosPrivate.delete(`/carts/${auth?.id}`);
-      console.log(result);
       createNotifications(
         auth.id,
         "Cart is cleared",
@@ -68,6 +66,7 @@ const Cart = ({ createNotifications }) => {
         "/dashboard/cart",
         NOTIF_LIST.Payment
       );
+      await axiosPrivate.delete(`/carts/${auth?.id}`);
       navigate(0);
     } catch (err) {
       console.error(err?.message);
